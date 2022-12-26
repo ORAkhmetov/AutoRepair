@@ -1,6 +1,7 @@
 package ru.akhmetov.AutoRepair.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,13 +17,14 @@ public class Case {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 
     @Column(name = "mileage")
+    @Min(value = 0, message = "Пробег не должн быть меньше нуля")
     private int mileage;
 
     @Column(name = "date_of_case")
@@ -42,11 +44,11 @@ public class Case {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

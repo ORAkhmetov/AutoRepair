@@ -1,6 +1,7 @@
 package ru.akhmetov.AutoRepair.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,15 @@ public class Car {
     private int id;
 
     @Column(name = "model")
+    @NotEmpty(message = "Модель не должна быть пустой")
     private String model;
 
     @Column(name = "state_number")
+    @NotEmpty(message = "Госномер не должен быть пустым")
     private String stateNumber;
 
     @Column(name = "vin")
+    @NotEmpty(message = "VIN не должен быть пустым")
     private String vin;
 
     @ManyToOne

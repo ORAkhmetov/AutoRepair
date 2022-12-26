@@ -1,6 +1,7 @@
 package ru.akhmetov.AutoRepair.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 /**
  * @author Oleg Akhmetov on 26.12.2022
@@ -11,9 +12,10 @@ public class Order {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(name = "value")
+    @Min(value = 0, message = "Стоимость не должна быть меньше нуля")
     private int value;
 
     @Enumerated(EnumType.ORDINAL)
@@ -23,21 +25,20 @@ public class Order {
     @JoinColumn(name = "case_id", referencedColumnName = "id")
     private Case aCase;
 
-    public Order(int value, OrderType orderType, Case aCase) {
+    public Order(int value, OrderType orderType) {
         this.value = value;
         this.orderType = orderType;
-        this.aCase = aCase;
     }
 
     public Order() {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,6 +1,7 @@
 package ru.akhmetov.AutoRepair.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,10 @@ public class Client {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(name = "full_name")
+    @NotEmpty(message = "Имя не должно быть пустым")
     private String fullName;
 
     @OneToMany(mappedBy = "owner")
@@ -31,11 +33,11 @@ public class Client {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -8,5 +8,5 @@ import ru.akhmetov.AutoRepair.models.Case;
  * @author Oleg Akhmetov on 26.12.2022
  */
 @Repository
-public interface CasesRepository extends JpaRepository<Case, Long> {
+public interface CasesRepository extends JpaRepository<Case, Integer> {
 }
