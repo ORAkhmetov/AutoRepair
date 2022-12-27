@@ -2,6 +2,9 @@ package ru.akhmetov.AutoRepair.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.akhmetov.AutoRepair.dto.CarDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +40,18 @@ public class Car {
     @OneToMany(mappedBy = "car_id")
     private List<Case> caseList;
 
-    public Car(String model, String stateNumber, String vin, Client owner) {
-        this.model = model;
-        this.stateNumber = stateNumber;
-        this.vin = vin;
-        this.owner = owner;
-        this.caseList = new ArrayList<>();
+    public Car(CarDTO carDTO) {
+        this.model = carDTO.getModel();
+        this.stateNumber = carDTO.getStateNumber();
+        this.vin = carDTO.getVin();
+        this.owner = carDTO.getOwner();
     }
 
     public Car() {
 
+    }
+
+    public Car(String model, String stateNumber, String vin, Client owner) {
     }
 
     public int getId() {

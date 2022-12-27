@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.akhmetov.AutoRepair.dto.CarDTO;
 import ru.akhmetov.AutoRepair.models.Car;
-import ru.akhmetov.AutoRepair.services.CarsService;
+import ru.akhmetov.AutoRepair.services.DefaultCarsService;
 import ru.akhmetov.AutoRepair.util.CarValidator;
 
 /**
@@ -12,24 +12,13 @@ import ru.akhmetov.AutoRepair.util.CarValidator;
  */
 @Controller
 public class CarsController {
-    private final CarsService carsService;
+    private final DefaultCarsService defaultCarsService;
     private final CarValidator carValidator;
 
     @Autowired
-    public CarsController(CarsService carsService, CarValidator carValidator) {
-        this.carsService = carsService;
+    public CarsController(DefaultCarsService defaultCarsService, CarValidator carValidator) {
+        this.defaultCarsService = defaultCarsService;
         this.carValidator = carValidator;
     }
-    private Car covertToCar(CarDTO carDTO) {
-        Car car = new Car(
-                carDTO.getModel(),
-                carDTO.getStateNumber(),
-                carDTO.getVin(),
-                carDTO.getOwner());
-        enrichCar(car);
-        return car;
-    }
-    private void enrichCar(Car car) {
 
-    }
 }

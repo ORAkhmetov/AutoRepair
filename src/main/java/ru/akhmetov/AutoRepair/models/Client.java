@@ -2,6 +2,7 @@ package ru.akhmetov.AutoRepair.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import ru.akhmetov.AutoRepair.dto.ClientDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,8 @@ public class Client {
     @OneToMany(mappedBy = "owner")
     private List<Car> carList;
 
-    public Client(String fullName) {
-        this.fullName = fullName;
-        this.carList = new ArrayList<>();
+    public Client(ClientDTO clientDTO) {
+        this.fullName = clientDTO.getFullName();
     }
 
     public Client() {

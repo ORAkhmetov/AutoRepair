@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.akhmetov.AutoRepair.dto.OrderDTO;
 import ru.akhmetov.AutoRepair.models.Order;
-import ru.akhmetov.AutoRepair.services.OrdersService;
+import ru.akhmetov.AutoRepair.services.DefaultOrdersService;
 import ru.akhmetov.AutoRepair.util.OrderValidator;
 
 /**
@@ -13,11 +13,11 @@ import ru.akhmetov.AutoRepair.util.OrderValidator;
 @Controller
 public class OrdersController {
 
-    private final OrdersService ordersService;
+    private final DefaultOrdersService defaultOrdersService;
     private final OrderValidator orderValidator;
     @Autowired
-    public OrdersController(OrdersService ordersService, OrderValidator orderValidator) {
-        this.ordersService = ordersService;
+    public OrdersController(DefaultOrdersService defaultOrdersService, OrderValidator orderValidator) {
+        this.defaultOrdersService = defaultOrdersService;
         this.orderValidator = orderValidator;
     }
 

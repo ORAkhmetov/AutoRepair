@@ -1,9 +1,7 @@
 package ru.akhmetov.AutoRepair.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
+import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.models.Client;
 
 /**
@@ -21,6 +19,12 @@ public class CarDTO {
     private String vin;
 
     private Client owner;
+    public CarDTO(Car car) {
+        this.model = car.getModel();
+        this.stateNumber = car.getStateNumber();
+        this.vin = car.getVin();
+        this.owner = car.getOwner();
+    }
 
     public String getModel() {
         return model;

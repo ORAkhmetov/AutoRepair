@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.akhmetov.AutoRepair.dto.CaseDTO;
 import ru.akhmetov.AutoRepair.models.Case;
-import ru.akhmetov.AutoRepair.services.CasesService;
+import ru.akhmetov.AutoRepair.services.DefaultCasesService;
 import ru.akhmetov.AutoRepair.util.CaseValidator;
 
 /**
@@ -12,11 +12,11 @@ import ru.akhmetov.AutoRepair.util.CaseValidator;
  */
 @Controller
 public class CasesController {
-    private final CasesService casesService;
+    private final DefaultCasesService defaultCasesService;
     private final CaseValidator caseValidator;
     @Autowired
-    public CasesController(CasesService casesService, CaseValidator caseValidator) {
-        this.casesService = casesService;
+    public CasesController(DefaultCasesService defaultCasesService, CaseValidator caseValidator) {
+        this.defaultCasesService = defaultCasesService;
         this.caseValidator = caseValidator;
     }
     private Case convertToCase(CaseDTO caseDTO) {
