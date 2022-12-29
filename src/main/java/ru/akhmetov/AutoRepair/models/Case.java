@@ -11,7 +11,7 @@ import java.util.List;
  * @author Oleg Akhmetov on 26.12.2022
  */
 @Entity
-@Table(name = "case")
+@Table(name = "aCase")
 public class Case {
 
     @Id
@@ -30,7 +30,7 @@ public class Case {
     @Column(name = "date_of_case")
     private Date dateOfCase;
 
-    @OneToMany(mappedBy = "case_id")
+    @OneToMany(mappedBy = "aCase")
     private List<Order> orderList;
 
     public Case(Car car, int mileage, Date dateOfCase) {

@@ -14,10 +14,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
-public class DefaultCarsService implements CarsService {
+public class CarsServiceImpl implements CarsService {
     private final CarsRepository carsRepository;
 
-    public DefaultCarsService(CarsRepository carsRepository) {
+    public CarsServiceImpl(CarsRepository carsRepository) {
         this.carsRepository = carsRepository;
     }
     public List<Car> findAll() {
@@ -45,5 +45,11 @@ public class DefaultCarsService implements CarsService {
 
     public List<Car> getCarsByClient(Client client) {
         return carsRepository.getCarsByOwner(client);
+    }
+    public Optional<Car> getCarByVin(String vin) {
+        return carsRepository.getCarByVin(vin);
+    }
+    public Optional<Car> getCarByStateNumber(String stateNumber) {
+        return carsRepository.getCarByStateNumber(stateNumber);
     }
 }

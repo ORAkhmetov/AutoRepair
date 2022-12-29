@@ -15,13 +15,11 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
-public class DefaultClientsService implements ClientsService{
+public class ClientsServiceImpl implements ClientsService{
     private final ClientsRepository clientsRepository;
-    private final ModelMapper modelMapper;
 
-    public DefaultClientsService(ClientsRepository clientsRepository, ModelMapper modelMapper) {
+    public ClientsServiceImpl(ClientsRepository clientsRepository) {
         this.clientsRepository = clientsRepository;
-        this.modelMapper = modelMapper;
     }
     public List<Client> findAll() {
         return clientsRepository.findAll();
@@ -47,10 +45,7 @@ public class DefaultClientsService implements ClientsService{
         clientsRepository.deleteById(id);
     }
 
-    public ClientDTO convertToClientDTO(Client client) {
-        return modelMapper.map(client, ClientDTO.class);
-    }
-    public Client convertToClient(ClientDTO clientDTO) {
-        return modelMapper.map(clientDTO, Client.class);
+    public Optional<Client> getClientByFullName(String fullName) {
+        return clientsRepository.getClientByFullName(fullName);
     }
 }

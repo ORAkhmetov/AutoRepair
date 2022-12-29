@@ -8,11 +8,24 @@ import ru.akhmetov.AutoRepair.models.Client;
  */
 public class ClientDTO {
 
+    private int id;
+
     @NotEmpty(message = "Имя не должно быть пустым")
     private String fullName;
 
     public ClientDTO(Client client) {
         this.fullName = client.getFullName();
+    }
+
+    public ClientDTO() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullName() {

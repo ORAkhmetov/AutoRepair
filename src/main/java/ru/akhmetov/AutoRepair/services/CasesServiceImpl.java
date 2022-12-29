@@ -16,10 +16,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
-public class DefaultCasesService implements CasesService{
+public class CasesServiceImpl implements CasesService{
     private final CasesRepository casesRepository;
 
-    public DefaultCasesService(CasesRepository casesRepository) {
+    public CasesServiceImpl(CasesRepository casesRepository) {
         this.casesRepository = casesRepository;
     }
     public List<Case> findAll() {

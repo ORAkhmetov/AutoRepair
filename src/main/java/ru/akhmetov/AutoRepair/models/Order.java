@@ -7,17 +7,18 @@ import jakarta.validation.constraints.Min;
  * @author Oleg Akhmetov on 26.12.2022
  */
 @Entity
-@Table(name = "order")
+@Table(name = "aOrder")
 public class Order {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "value")
+    @Column(name = "aValue")
     @Min(value = 0, message = "Стоимость не должна быть меньше нуля")
     private int value;
 
+    @Column(name = "order_type")
     @Enumerated(EnumType.ORDINAL)
     private OrderType orderType;
 

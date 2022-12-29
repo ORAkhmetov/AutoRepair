@@ -12,9 +12,9 @@ import ru.akhmetov.AutoRepair.mappers.CarsMapper;
 import ru.akhmetov.AutoRepair.mappers.CasesMapper;
 import ru.akhmetov.AutoRepair.mappers.ClientsMapper;
 import ru.akhmetov.AutoRepair.models.Client;
-import ru.akhmetov.AutoRepair.services.DefaultCarsService;
-import ru.akhmetov.AutoRepair.services.DefaultCasesService;
-import ru.akhmetov.AutoRepair.services.DefaultClientsService;
+import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
+import ru.akhmetov.AutoRepair.services.CasesServiceImpl;
+import ru.akhmetov.AutoRepair.services.ClientsServiceImpl;
 import ru.akhmetov.AutoRepair.util.ClientValidator;
 
 import java.util.ArrayList;
@@ -28,22 +28,22 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/clients")
 public class ClientsController {
-    private final DefaultClientsService defaultClientsService;
-    private final DefaultCarsService defaultCarsService;
-    private final DefaultCasesService defaultCasesService;
+    private final ClientsServiceImpl clientsServiceImpl;
+    private final CarsServiceImpl carsServiceImpl;
+    private final CasesServiceImpl casesServiceImpl;
     private final ClientValidator clientValidator;
-    private final ModelMapper modelMapper;
     private final CarsMapper carsMapper;
     private final ClientsMapper clientsMapper;
     private final CasesMapper casesMapper;
 
     @Autowired
-    public ClientsController(DefaultClientsService defaultClientsService, DefaultCarsService defaultCarsService, DefaultCasesService defaultCasesService, ClientValidator clientValidator, ModelMapper modelMapper, CarsMapper carsMapper, ClientsMapper clientsMapper, CasesMapper casesMapper) {
-        this.defaultClientsService = defaultClientsService;
-        this.defaultCarsService = defaultCarsService;
-        this.defaultCasesService = defaultCasesService;
+    public ClientsController(ClientsServiceImpl clientsServiceImpl, CarsServiceImpl carsServiceImpl,
+                             CasesServiceImpl casesServiceImpl, ClientValidator clientValidator, CarsMapper carsMapper,
+                             ClientsMapper clientsMapper, CasesMapper casesMapper) {
+        this.clientsServiceImpl = clientsServiceImpl;
+        this.carsServiceImpl = carsServiceImpl;
+        this.casesServiceImpl = casesServiceImpl;
         this.clientValidator = clientValidator;
-        this.modelMapper = modelMapper;
         this.carsMapper = carsMapper;
         this.clientsMapper = clientsMapper;
         this.casesMapper = casesMapper;
@@ -51,19 +51,20 @@ public class ClientsController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("clients", defaultClientsService.findAll());
+        model.addAttribute("clients", clientsServiceImpl.findAll().stream()
+                .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
         return "clients/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        Client client = defaultClientsService.findOne(id);
+        Client client = clientsServiceImpl.findOne(id);
         model.addAttribute("client", clientsMapper.convertToClientDTO(client));
 
-        model.addAttribute("cars", defaultCarsService.getCarsByClient(client).stream()
+        model.addAttribute("cars", carsServiceImpl.getCarsByClient(client).stream()
                 .map(carsMapper::convertToCarDTO).collect(Collectors.toList()));
 
-        model.addAttribute("cases", defaultCasesService.getCasesByClient(client).stream()
+        model.addAttribute("cases", casesServiceImpl.getCasesByClient(client).stream()
                 .map(casesMapper::convertToCaseDTO).collect(Collectors.toList()));
 
         return "clients/show";
@@ -76,49 +77,37 @@ public class ClientsController {
     @PostMapping()
     public String create(@ModelAttribute("client") @Valid ClientDTO clientDTO,
                          BindingResult bindingResult) {
-        clientValidator.validate(clientDTO, bindingResult);
+        Client client = clientsMapper.convertToClient(clientDTO);
+        clientValidator.validate(client, bindingResult);
         if (bindingResult.hasErrors())
             return "clients/new";
 
-        defaultClientsService.save(new Client(clientDTO));
+        clientsServiceImpl.save(client);
         return "redirect:/clients";
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("client", defaultClientsService.findOne(id));
+        model.addAttribute("client", clientsMapper.convertToClientDTO(clientsServiceImpl.findOne(id)));
         return "clients/edit";
     }
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult,
+    public String update(@ModelAttribute("client") @Valid ClientDTO clientDTO, BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        Client client = clientsMapper.convertToClient(clientDTO);
         clientValidator.validate(client, bindingResult);//Добавил, не было в рыбе
         if (bindingResult.hasErrors())
             return "clients/edit";
 
-        defaultClientsService.update(id, client);
+        clientsServiceImpl.update(id, client);
         return "redirect:/clients";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        defaultClientsService.delete(id);
+        clientsServiceImpl.delete(id);
         return "redirect:/clients";
     }
 
 
-    private Client convertToClient(ClientDTO clientDTO) {
-        return modelMapper.map(clientDTO, Client.class);
-    }
-
-    private ClientDTO convertToClientDTO(Client client) {
-        return modelMapper.map(client, ClientDTO.class);
-    }
-    private List<ClientDTO> convertListToClientDTO(List<Client> clientList) {
-        List<ClientDTO> convertedList = new ArrayList<>();
-        for (Client client : clientList) {
-            convertedList.add(modelMapper.map(client, ClientDTO.class));
-        }
-        return convertedList;
-    }
 
 }

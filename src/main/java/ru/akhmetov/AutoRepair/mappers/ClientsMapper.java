@@ -16,7 +16,6 @@ public class ClientsMapper {
         this.modelMapper = modelMapper;
     }
 
-
     public ClientDTO convertToClientDTO(Client client) {
         return modelMapper.map(client, ClientDTO.class);
     }

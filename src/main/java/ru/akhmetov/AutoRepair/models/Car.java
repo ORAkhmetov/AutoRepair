@@ -34,10 +34,10 @@ public class Car {
     private String vin;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client owner;
 
-    @OneToMany(mappedBy = "car_id")
+    @OneToMany(mappedBy = "car")
     private List<Case> caseList;
 
     public Car(CarDTO carDTO) {

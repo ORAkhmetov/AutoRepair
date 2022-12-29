@@ -6,6 +6,7 @@ import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.models.Client;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Oleg Akhmetov on 26.12.2022
@@ -13,4 +14,6 @@ import java.util.List;
 @Repository
 public interface CarsRepository extends JpaRepository<Car, Integer> {
     List<Car> getCarsByOwner(Client client);//Находит машины клиента
+    Optional<Car> getCarByVin(String vin);
+    Optional<Car> getCarByStateNumber(String stateNumber);
 }

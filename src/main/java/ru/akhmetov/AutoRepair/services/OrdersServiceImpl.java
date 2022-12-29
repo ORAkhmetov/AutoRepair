@@ -13,10 +13,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
-public class DefaultOrdersService implements OrdersService {
+public class OrdersServiceImpl implements OrdersService {
     private final OrdersRepository ordersRepository;
 
-    public DefaultOrdersService(OrdersRepository ordersRepository) {
+    public OrdersServiceImpl(OrdersRepository ordersRepository) {
         this.ordersRepository = ordersRepository;
     }
     public List<Order> findAll() {
