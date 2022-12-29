@@ -1,0 +1,28 @@
+<!-- Готов -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить обращение</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
+    <label for="name">Введите имя: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    <br/>
+    <label for="faultDescription">Введите описание неисправности: </label>
+    <input type="text" th:field="*{faultDescription}" id="faultDescription"/>
+    <div style="color:red" th:if="${#fields.hasErrors('faultDescription')}" th:errors="*{faultDescription}">fault Description</div>
+    <br/>
+    <label for="mileage">Введите пробег: </label>
+    <input type="text" th:field="*{mileage}" id="mileage"/>
+    <div style="color:red" th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}">fault Description</div>
+    <br/>
+
+    <input type="submit" value="Редактировать!"/>
+</form>
+
+</body>
+</html>

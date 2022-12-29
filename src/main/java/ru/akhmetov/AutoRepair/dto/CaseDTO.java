@@ -11,12 +11,29 @@ import java.util.Date;
  */
 public class CaseDTO {
 
+    private int id;
+
+    private String name;
+
+    private String faultDescription;
+
     private Car car;
 
-    @Min(value = 0, message = "Пробег не должн быть меньше нуля")
+    @Min(value = 0, message = "Пробег не должен быть меньше нуля")
     private int mileage;
 
     private Date dateOfCase;
+
+    public CaseDTO() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Car getCar() {
         return car;
@@ -40,5 +57,21 @@ public class CaseDTO {
 
     public void setDateOfCase(Date dateOfCase) {
         this.dateOfCase = dateOfCase;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFaultDescription() {
+        return faultDescription;
+    }
+
+    public void setFaultDescription(String faultDescription) {
+        this.faultDescription = faultDescription;
     }
 }

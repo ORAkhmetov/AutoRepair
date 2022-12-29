@@ -7,13 +7,15 @@ import jakarta.validation.constraints.Min;
  * @author Oleg Akhmetov on 26.12.2022
  */
 @Entity
-@Table(name = "aOrder")
+@Table(name = "aorder")
 public class Order {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "name")
+    private String name;
     @Column(name = "aValue")
     @Min(value = 0, message = "Стоимость не должна быть меньше нуля")
     private int value;
@@ -41,6 +43,14 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getValue() {

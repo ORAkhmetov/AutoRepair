@@ -1,0 +1,21 @@
+<!-- Готов -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ремонты</title>
+</head>
+<body>
+
+<div th:each="case : ${cases}">
+    <a th:href="@{/cases/{id}(id=${case.getId()})}"
+       th:text="${case.getName() + ', ' + case.getDateOfCase()}">Case</a>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/cases/new">Добавить ремонт</a>
+
+</body>
+</html>

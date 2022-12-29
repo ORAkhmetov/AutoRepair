@@ -7,10 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.dto.CarDTO;
-import ru.akhmetov.AutoRepair.dto.ClientDTO;
 import ru.akhmetov.AutoRepair.mappers.CarsMapper;
-import ru.akhmetov.AutoRepair.models.Client;
+import ru.akhmetov.AutoRepair.mappers.CasesMapper;
+import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
+import ru.akhmetov.AutoRepair.services.CasesServiceImpl;
 import ru.akhmetov.AutoRepair.util.CarValidator;
 
 import java.util.stream.Collectors;
@@ -24,12 +25,16 @@ public class CarsController {
     private final CarsServiceImpl carsServiceImpl;
     private final CarValidator carValidator;
     private final CarsMapper carsMapper;
+    private final CasesMapper casesMapper;
+    private final CasesServiceImpl casesService;
 
     @Autowired
-    public CarsController(CarsServiceImpl carsServiceImpl, CarValidator carValidator, CarsMapper carsMapper) {
+    public CarsController(CarsServiceImpl carsServiceImpl, CarValidator carValidator, CarsMapper carsMapper, CasesMapper casesMapper, CasesServiceImpl casesService) {
         this.carsServiceImpl = carsServiceImpl;
         this.carValidator = carValidator;
         this.carsMapper = carsMapper;
+        this.casesMapper = casesMapper;
+        this.casesService = casesService;
     }
 
     @GetMapping()
@@ -41,23 +46,27 @@ public class CarsController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-                model.addAttribute("car", carsMapper.convertToCarDTO(carsServiceImpl.findOne(id)));
+        Car car = carsServiceImpl.findOne(id);
+        model.addAttribute("car", carsMapper.convertToCarDTO(car));
+        model.addAttribute("cases", casesService.getCasesByCar(car).stream()
+                .map(casesMapper::convertToCaseDTO).collect(Collectors.toList()));
 
         return "cars/show";
     }
     @GetMapping("/new")
-    public String newCar(@ModelAttribute("car") ClientDTO clientDTO) {
+    public String newCar(@ModelAttribute("car") CarDTO carDTO) {
         return "cars/new";
     }
 
     @PostMapping()
     public String create(@ModelAttribute("car") @Valid CarDTO carDTO,
                          BindingResult bindingResult) {
-        carValidator.validate(carDTO, bindingResult);
+        Car car = carsMapper.convertToCar(carDTO);
+        carValidator.validate(car, bindingResult);
         if (bindingResult.hasErrors())
             return "cars/new";
 
-        carsServiceImpl.save(carsMapper.convertToCar(carDTO));
+        carsServiceImpl.save(car);
         return "redirect:/cars";
     }
     @GetMapping("/{id}/edit")
@@ -68,11 +77,12 @@ public class CarsController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("car") @Valid CarDTO carDTO, BindingResult bindingResult,
                          @PathVariable("id") int id) {
-        carValidator.validate(carDTO, bindingResult);//Добавил, не было в рыбе
+        Car car = carsMapper.convertToCar(carDTO);
+        carValidator.validate(car, bindingResult);//Добавил, не было в рыбе
         if (bindingResult.hasErrors())
             return "cars/edit";
 
-        carsServiceImpl.update(id, carsMapper.convertToCar(carDTO));
+        carsServiceImpl.update(id, car);
         return "redirect:/cars";
     }
 

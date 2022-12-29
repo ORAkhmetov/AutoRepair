@@ -4,6 +4,7 @@ import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.models.Case;
 import ru.akhmetov.AutoRepair.models.Client;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,6 @@ public interface CasesService {
     void delete(int id);
     List<Case> getCasesByClient(Client client);
     default void enrichCase(Case aCase) {
-
+        aCase.setDateOfCase(new Date());
     }
 }

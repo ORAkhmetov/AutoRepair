@@ -7,10 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.dto.CaseDTO;
-import ru.akhmetov.AutoRepair.dto.ClientDTO;
 import ru.akhmetov.AutoRepair.mappers.CasesMapper;
-import ru.akhmetov.AutoRepair.models.Client;
+import ru.akhmetov.AutoRepair.mappers.OrdersMapper;
+import ru.akhmetov.AutoRepair.models.Case;
 import ru.akhmetov.AutoRepair.services.CasesServiceImpl;
+import ru.akhmetov.AutoRepair.services.OrdersServiceImpl;
 import ru.akhmetov.AutoRepair.util.CaseValidator;
 
 import java.util.stream.Collectors;
@@ -24,11 +25,16 @@ public class CasesController {
     private final CasesServiceImpl casesServiceImpl;
     private final CaseValidator caseValidator;
     private final CasesMapper casesMapper;
+
+    private final OrdersServiceImpl ordersService;
+    private final OrdersMapper ordersMapper;
     @Autowired
-    public CasesController(CasesServiceImpl casesServiceImpl, CaseValidator caseValidator, CasesMapper casesMapper) {
+    public CasesController(CasesServiceImpl casesServiceImpl, CaseValidator caseValidator, CasesMapper casesMapper, OrdersServiceImpl ordersService, OrdersMapper ordersMapper) {
         this.casesServiceImpl = casesServiceImpl;
         this.caseValidator = caseValidator;
         this.casesMapper = casesMapper;
+        this.ordersService = ordersService;
+        this.ordersMapper = ordersMapper;
     }
     @GetMapping()
     public String index(Model model) {
@@ -39,7 +45,10 @@ public class CasesController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("case", casesMapper.convertToCaseDTO(casesServiceImpl.findOne(id)));
+        Case aCase = casesServiceImpl.findOne(id);
+        model.addAttribute("case", casesMapper.convertToCaseDTO(aCase));
+        model.addAttribute("orders", ordersService.getOrdersByCase(aCase).stream()
+                .map(ordersMapper::convertToOrderDTO).collect(Collectors.toList()));
         return "cases/show";
     }
     @GetMapping("/new")
@@ -50,11 +59,12 @@ public class CasesController {
     @PostMapping()
     public String create(@ModelAttribute("case") @Valid CaseDTO caseDTO,
                          BindingResult bindingResult) {
-       /* caseValidator.validate(caseDTO, bindingResult);
+        Case aCase = casesMapper.convertToCase(caseDTO);
+        caseValidator.validate(aCase, bindingResult);
         if (bindingResult.hasErrors())
-            return "cases/new";*/
+            return "cases/new";
 
-        casesServiceImpl.save(casesMapper.convertToCase(caseDTO));
+        casesServiceImpl.save(aCase);
         return "redirect:/cases";
     }
     @GetMapping("/{id}/edit")
@@ -65,11 +75,12 @@ public class CasesController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("case") @Valid CaseDTO caseDTO, BindingResult bindingResult,
                          @PathVariable("id") int id) {
+        Case aCase = casesMapper.convertToCase(caseDTO);
         caseValidator.validate(caseDTO, bindingResult);//Добавил, не было в рыбе
         if (bindingResult.hasErrors())
             return "cases/edit";
 
-        casesServiceImpl.update(id, casesMapper.convertToCase(caseDTO));
+        casesServiceImpl.update(id, aCase);
         return "redirect:/cases";
     }
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+</head>
+<body>
+<p th:text="${car.getModel()}">VALUE</p>
+<p th:text="${'Владелец: ' + car.getOwner().getFullName()}">VALUE</p>
+<p th:text="${'Госномер: ' + car.getStateNumber()}">VALUE</p>
+<p th:text="${'VIN: ' + car.getVin()}">VALUE</p>
+<!-- Не добавлено ни одного ремонта -->
+<div th:if="${cases.isEmpty()}">
+    <p>Для данной машины еще не добавлено ни одного ремонта</p>
+    <hr/>
+</div>
+
+<!-- Отображаем ремонты -->
+<!--<div th:if="${!cases.isEmpty()}">
+    <hr/>
+    <b>:</b>
+    <br/>
+    <table th:each="case : ${cases}">
+        <tr>
+            <td>
+                <span  th:text="${case.getModel() + ', ' + case.getStateNumber()}">case</span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+</div>-->
+
+<form th:method="GET" th:action="@{/cars/{id}/edit(id=${car.getId()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+
+<form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+
+</body>
+</html>

@@ -11,13 +11,19 @@ import java.util.List;
  * @author Oleg Akhmetov on 26.12.2022
  */
 @Entity
-@Table(name = "aCase")
+@Table(name = "acase")
 public class Case {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "fault_description")
+    private String faultDescription;
 
     @ManyToOne
     @JoinColumn(name = "car_id", referencedColumnName = "id")
@@ -82,5 +88,21 @@ public class Case {
 
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFaultDescription() {
+        return faultDescription;
+    }
+
+    public void setFaultDescription(String faultDescription) {
+        this.faultDescription = faultDescription;
     }
 }

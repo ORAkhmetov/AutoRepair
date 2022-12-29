@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиент</title>
+</head>
+<body>
+<p th:text="${client.getFullName()}">VALUE</p>
+<!-- Не добавлено ни одной машины -->
+<div th:if="${cars.isEmpty()}">
+    <p>Для данного клиента еще не добавлено ни одной машины</p>
+    <hr/>
+</div>
+
+<!-- Отображаем машины клиента -->
+<div th:if="${!cars.isEmpty()}">
+    <hr/>
+    <b>Машины клиента:</b>
+    <br/>
+    <table th:each="car : ${cars}">
+        <tr>
+            <td>
+                <span  th:text="${car.getModel() + ', ' + car.getStateNumber()}">book</span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+</div>
+
+<form th:method="GET" th:action="@{/clients/{id}/edit(id=${client.getId()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+
+<form th:method="DELETE" th:action="@{/clients/{id}(id=${client.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+
+</body>
+</html>

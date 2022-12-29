@@ -1,0 +1,20 @@
+<!-- Готов -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Новый клиент</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/clients}" th:object="${client}">
+  <label for="fullName">Введите уникальное имя клиента: </label>
+  <input type="text" th:field="*{fullName}" id="fullName"/>
+  <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</div>
+  <br/>
+  <input type="submit" value="Добавить клиента"/>
+</form>
+
+</body>
+</html>
+

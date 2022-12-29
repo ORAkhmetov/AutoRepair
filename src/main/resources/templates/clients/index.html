@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои клиенты</title>
+</head>
+<body>
+<p>Клиенты:</p>
+<hr/>
+<div th:each="client : ${clients}">
+    <a th:href="@{/clients/{id}(id=${client.getId()})}"
+       th:text="${client.getFullName()}">AUser</a>
+</div>
+
+<br/>
+<hr/>
+
+<form th:method="GET" th:action="@{/clients/new}">
+    <input type="submit" value="Добавить нового клиента"/>
+</form>
+<br/>
+
+</body>
+</html>

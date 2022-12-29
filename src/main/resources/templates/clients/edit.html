@@ -1,0 +1,19 @@
+<!-- Готов -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать клиента</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/clients/{id}(id=${client.getId()})}" th:object="${client}">
+    <label for="fullName">Введите уникальное имя клиента: </label>
+    <input type="text" th:field="*{fullName}" id="fullName"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</div>
+    <br/>
+    <input type="submit" value="Сохранить изменения"/>
+</form>
+
+</body>
+</html>

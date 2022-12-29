@@ -8,6 +8,7 @@ import ru.akhmetov.AutoRepair.models.Client;
 import ru.akhmetov.AutoRepair.repositories.CasesRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ public class CasesServiceImpl implements CasesService{
     }
     @Transactional
     public void save(Case aCase) {
+        enrichCase(aCase);
         casesRepository.save(aCase);
     }
     @Transactional
@@ -52,5 +54,8 @@ public class CasesServiceImpl implements CasesService{
            caseList.addAll(car.getCaseList());
         }
         return caseList;
+    }
+    public List<Case> getCasesByCar(Car car) {
+        return casesRepository.getCasesByCar(car);
     }
 }

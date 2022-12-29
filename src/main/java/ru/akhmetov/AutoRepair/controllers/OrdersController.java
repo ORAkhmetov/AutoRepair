@@ -52,11 +52,12 @@ public class OrdersController {
     @PostMapping()
     public String create(@ModelAttribute("order") @Valid OrderDTO orderDTO,
                          BindingResult bindingResult) {
-        /*orderValidator.validate(orderDTO, bindingResult);
+        Order order = ordersMapper.convertToOrder(orderDTO);
+        orderValidator.validate(order, bindingResult);
         if (bindingResult.hasErrors())
-            return "orders/new";*/
+            return "orders/new";
 
-        ordersServiceImpl.save(ordersMapper.convertToOrder(orderDTO));
+        ordersServiceImpl.save(order);
         return "redirect:/orders";
     }
     @GetMapping("/{id}/edit")

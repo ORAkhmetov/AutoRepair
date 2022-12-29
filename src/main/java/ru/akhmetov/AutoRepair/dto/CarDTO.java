@@ -9,10 +9,12 @@ import ru.akhmetov.AutoRepair.models.Client;
  */
 public class CarDTO {
 
+    private int id;
+
     @NotEmpty(message = "Модель не должна быть пустой")
     private String model;
 
-    @NotEmpty(message = "Госномер не должн быть пустым")
+    @NotEmpty(message = "Госномер не должен быть пустым")
     private String stateNumber;
 
     @NotEmpty(message = "VIN не должен быть пустым")
@@ -24,6 +26,17 @@ public class CarDTO {
         this.stateNumber = car.getStateNumber();
         this.vin = car.getVin();
         this.owner = car.getOwner();
+    }
+
+    public CarDTO() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getModel() {
