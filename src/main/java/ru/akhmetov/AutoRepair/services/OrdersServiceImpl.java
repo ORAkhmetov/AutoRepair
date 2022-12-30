@@ -2,7 +2,7 @@ package ru.akhmetov.AutoRepair.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.akhmetov.AutoRepair.models.Case;
+import ru.akhmetov.AutoRepair.models.Appeal;
 import ru.akhmetov.AutoRepair.models.Order;
 import ru.akhmetov.AutoRepair.repositories.OrdersRepository;
 
@@ -43,7 +43,7 @@ public class OrdersServiceImpl implements OrdersService {
         ordersRepository.deleteById(id);
     }
 
-    public List<Order> getOrdersByCase (Case aCase) {
-        return ordersRepository.getOrdersByACase(aCase);
+    public List<Order> getOrdersByAppeal (Appeal appeal) {
+        return ordersRepository.getOrdersByAppeal(appeal);
     }
 }

@@ -20,12 +20,18 @@
     <table th:each="car : ${cars}">
         <tr>
             <td>
-                <span  th:text="${car.getModel() + ', ' + car.getStateNumber()}">book</span>
+                <a th:href="@{/cars/{id}(id=${car.getId()})}" th:text="${car.getModel() + ', ' + car.getStateNumber()}">book</a>
             </td>
         </tr>
     </table>
     <hr/>
 </div>
+
+
+
+<form th:method="GET" th:action="@{/cars/new}">
+    <button type="submit" th:name="owner_id" th:value="${client.getId()}">Добавить машину для клиента</button>
+</form>
 
 <form th:method="GET" th:action="@{/clients/{id}/edit(id=${client.getId()})}">
     <input type="submit" value="Редактировать"/>

@@ -7,6 +7,8 @@ import org.springframework.validation.Validator;
 import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
 
+import java.util.Optional;
+
 /**
  * @author Oleg Akhmetov on 26.12.2022
  */
@@ -27,11 +29,18 @@ public class CarValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        Car car = (Car) target;
+        Car validCar = (Car) target;
+        Optional<Car> foundedCarByVin = carsService.getCarByVin(validCar.getVin());
+        Optional<Car> foundedCarByStateNumber = carsService.getCarByStateNumber(validCar.getStateNumber());
 
-        if (carsService.getCarByVin(car.getVin()).isPresent())
-            errors.rejectValue("vin", "", "Машина с таким VIN уже существует");
-        if (carsService.getCarByStateNumber(car.getStateNumber()).isPresent())
-            errors.rejectValue("stateNumber", "", "Машина с таким госномером уже существует");
+        if (foundedCarByVin.isPresent()) {
+            if (foundedCarByVin.get().getId() != validCar.getId())
+                errors.rejectValue("vin", "", "Машина с таким VIN уже существует");
+        }
+        if (foundedCarByStateNumber.isPresent()) {
+            if (foundedCarByStateNumber.get().getId() != validCar.getId())
+                errors.rejectValue("stateNumber", "", "Машина с таким госномером уже существует");
+
+        }
     }
 }

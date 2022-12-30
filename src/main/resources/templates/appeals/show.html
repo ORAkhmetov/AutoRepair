@@ -5,9 +5,9 @@
     <title>Show</title>
 </head>
 <body>
-<p th:text="${case.getName()}">VALUE</p>
-<p th:text="${'Владелец: ' + case.getCar().getOwner().getFullName()}">VALUE</p>
-<p th:text="${case.getCar().getModel()}">VALUE</p>
+<p th:text="${appeal.getName()}">VALUE</p>
+<p th:text="${'Владелец: ' + appeal.getCar().getOwner().getFullName()}">VALUE</p>
+<p th:text="${appeal.getCar().getModel()}">VALUE</p>
 <!-- Не добавлено ни одного ордера -->
 <div th:if="${orders.isEmpty()}">
     <p>Для данного ремонта еще не добавлено ни одного ордера</p>
@@ -29,11 +29,11 @@
     <hr/>
 </div>-->
 
-<form th:method="GET" th:action="@{/cases/{id}/edit(id=${case.getId()})}">
+<form th:method="GET" th:action="@{/appeals/{id}/edit(id=${appeal.getId()})}">
     <input type="submit" value="Редактировать"/>
 </form>
 <br/>
-<form th:method="DELETE" th:action="@{/cases/{id}(id=${case.getId()})}">
+<form th:method="DELETE" th:action="@{/appeal/{id}(id=${appeal.getId()})}">
     <input type="submit" value="Удалить"/>
 </form>
 </body>

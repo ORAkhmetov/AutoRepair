@@ -5,12 +5,17 @@
     <title>Show</title>
 </head>
 <body>
-<p th:text="${car.getModel()}">VALUE</p>
-<p th:text="${'Владелец: ' + car.getOwner().getFullName()}">VALUE</p>
+<div th:if="${car.getOwner() == null}">
+    <p style="color:red">Владелец: Нет данных о владельце</p>
+</div>
+<div th:if="${car.getOwner() != null}">
+    <a th:href="@{/clients/{id}(id=${car.getOwner().getId()})}" th:text="${'Владелец: ' + car.getOwner().getFullName()}">VALUE</a>
+</div>
+<p th:text="${'Модель: ' + car.getModel()}">VALUE</p>
 <p th:text="${'Госномер: ' + car.getStateNumber()}">VALUE</p>
 <p th:text="${'VIN: ' + car.getVin()}">VALUE</p>
 <!-- Не добавлено ни одного ремонта -->
-<div th:if="${cases.isEmpty()}">
+<div th:if="${appeals.isEmpty()}">
     <p>Для данной машины еще не добавлено ни одного ремонта</p>
     <hr/>
 </div>

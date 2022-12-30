@@ -1,7 +1,6 @@
 package ru.akhmetov.AutoRepair.controllers;
 
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,16 +8,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.dto.ClientDTO;
 import ru.akhmetov.AutoRepair.mappers.CarsMapper;
-import ru.akhmetov.AutoRepair.mappers.CasesMapper;
+import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
 import ru.akhmetov.AutoRepair.mappers.ClientsMapper;
 import ru.akhmetov.AutoRepair.models.Client;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
-import ru.akhmetov.AutoRepair.services.CasesServiceImpl;
+import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.services.ClientsServiceImpl;
 import ru.akhmetov.AutoRepair.util.ClientValidator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -30,23 +27,23 @@ import java.util.stream.Collectors;
 public class ClientsController {
     private final ClientsServiceImpl clientsServiceImpl;
     private final CarsServiceImpl carsServiceImpl;
-    private final CasesServiceImpl casesServiceImpl;
+    private final AppealsServiceImpl appealsServiceImpl;
     private final ClientValidator clientValidator;
     private final CarsMapper carsMapper;
     private final ClientsMapper clientsMapper;
-    private final CasesMapper casesMapper;
+    private final AppealsMapper appealsMapper;
 
     @Autowired
     public ClientsController(ClientsServiceImpl clientsServiceImpl, CarsServiceImpl carsServiceImpl,
-                             CasesServiceImpl casesServiceImpl, ClientValidator clientValidator, CarsMapper carsMapper,
-                             ClientsMapper clientsMapper, CasesMapper casesMapper) {
+                             AppealsServiceImpl appealsServiceImpl, ClientValidator clientValidator, CarsMapper carsMapper,
+                             ClientsMapper clientsMapper, AppealsMapper appealsMapper) {
         this.clientsServiceImpl = clientsServiceImpl;
         this.carsServiceImpl = carsServiceImpl;
-        this.casesServiceImpl = casesServiceImpl;
+        this.appealsServiceImpl = appealsServiceImpl;
         this.clientValidator = clientValidator;
         this.carsMapper = carsMapper;
         this.clientsMapper = clientsMapper;
-        this.casesMapper = casesMapper;
+        this.appealsMapper = appealsMapper;
     }
 
     @GetMapping()
@@ -64,8 +61,8 @@ public class ClientsController {
         model.addAttribute("cars", carsServiceImpl.getCarsByClient(client).stream()
                 .map(carsMapper::convertToCarDTO).collect(Collectors.toList()));
 
-        model.addAttribute("cases", casesServiceImpl.getCasesByClient(client).stream()
-                .map(casesMapper::convertToCaseDTO).collect(Collectors.toList()));
+        model.addAttribute("appeal", appealsServiceImpl.getAppealsByClient(client).stream()
+                .map(appealsMapper::convertToAppealDTO).collect(Collectors.toList()));
 
         return "clients/show";
     }

@@ -23,11 +23,11 @@
   <input type="submit" value="Машины"/>
 </form>
 <hr/>
-<div th:each="case : ${cases}">
-  <a th:href="@{/cases/{id}(id=${case.getId()})}"
-     th:text="${case.getName() + ', ' + case.getDateOfCase()}">AUser</a>
+<div th:each="appeal : ${appeals}">
+  <a th:href="@{/templates/appeals/{id}(id=${appeal.getId()})}"
+     th:text="${appeal.getName() + ', ' + appeal.getDateOfAppeal()}">appeal</a>
 </div>
-<form th:method="GET" th:action="@{/cases}">
+<form th:method="GET" th:action="@{/appeals}">
   <input type="submit" value="Ремонты"/>
 </form>
 <hr/>

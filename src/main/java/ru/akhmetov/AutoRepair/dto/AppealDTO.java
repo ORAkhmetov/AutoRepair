@@ -1,6 +1,5 @@
 package ru.akhmetov.AutoRepair.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import ru.akhmetov.AutoRepair.models.Car;
 
@@ -9,7 +8,7 @@ import java.util.Date;
 /**
  * @author Oleg Akhmetov on 26.12.2022
  */
-public class CaseDTO {
+public class AppealDTO {
 
     private int id;
 
@@ -22,9 +21,9 @@ public class CaseDTO {
     @Min(value = 0, message = "Пробег не должен быть меньше нуля")
     private int mileage;
 
-    private Date dateOfCase;
+    private Date dateOfAppeal;
 
-    public CaseDTO() {
+    public AppealDTO() {
     }
 
     public int getId() {
@@ -51,12 +50,12 @@ public class CaseDTO {
         this.mileage = mileage;
     }
 
-    public Date getDateOfCase() {
-        return dateOfCase;
+    public Date getDateOfAppeal() {
+        return dateOfAppeal;
     }
 
-    public void setDateOfCase(Date dateOfCase) {
-        this.dateOfCase = dateOfCase;
+    public void setDateOfAppeal(Date dateOfAppeal) {
+        this.dateOfAppeal = dateOfAppeal;
     }
 
     public String getName() {

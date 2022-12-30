@@ -1,7 +1,5 @@
 package ru.akhmetov.AutoRepair.services;
 
-import ru.akhmetov.AutoRepair.models.Case;
-import ru.akhmetov.AutoRepair.models.Client;
 import ru.akhmetov.AutoRepair.models.Order;
 
 import java.util.List;

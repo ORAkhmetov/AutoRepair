@@ -16,7 +16,7 @@ public class Order {
 
     @Column(name = "name")
     private String name;
-    @Column(name = "aValue")
+    @Column(name = "avalue")
     @Min(value = 0, message = "Стоимость не должна быть меньше нуля")
     private int value;
 
@@ -25,8 +25,8 @@ public class Order {
     private OrderType orderType;
 
     @ManyToOne
-    @JoinColumn(name = "case_id", referencedColumnName = "id")
-    private Case aCase;
+    @JoinColumn(name = "appeal_id", referencedColumnName = "id")
+    private Appeal appeal;
 
     public Order(int value, OrderType orderType) {
         this.value = value;
@@ -69,11 +69,11 @@ public class Order {
         this.orderType = orderType;
     }
 
-    public Case getaCase() {
-        return aCase;
+    public Appeal getAppeal() {
+        return appeal;
     }
 
-    public void setaCase(Case aCase) {
-        this.aCase = aCase;
+    public void setAppeal(Appeal appeal) {
+        this.appeal = appeal;
     }
 }

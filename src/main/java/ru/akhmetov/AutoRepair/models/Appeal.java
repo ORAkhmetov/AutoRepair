@@ -11,8 +11,8 @@ import java.util.List;
  * @author Oleg Akhmetov on 26.12.2022
  */
 @Entity
-@Table(name = "acase")
-public class Case {
+@Table(name = "appeal")
+public class Appeal {
 
     @Id
     @Column(name = "id")
@@ -33,20 +33,20 @@ public class Case {
     @Min(value = 0, message = "Пробег не должн быть меньше нуля")
     private int mileage;
 
-    @Column(name = "date_of_case")
-    private Date dateOfCase;
+    @Column(name = "date_of_appeal")
+    private Date dateOfAppeal;
 
-    @OneToMany(mappedBy = "aCase")
+    @OneToMany(mappedBy = "appeal")
     private List<Order> orderList;
 
-    public Case(Car car, int mileage, Date dateOfCase) {
+    public Appeal(Car car, int mileage, Date dateOfAppeal) {
         this.car = car;
         this.mileage = mileage;
-        this.dateOfCase = dateOfCase;
+        this.dateOfAppeal = dateOfAppeal;
         this.orderList = new ArrayList<>();
     }
 
-    public Case() {
+    public Appeal() {
 
     }
 
@@ -74,12 +74,12 @@ public class Case {
         this.mileage = mileage;
     }
 
-    public Date getDateOfCase() {
-        return dateOfCase;
+    public Date getDateOfAppeal() {
+        return dateOfAppeal;
     }
 
-    public void setDateOfCase(Date dateOfCase) {
-        this.dateOfCase = dateOfCase;
+    public void setDateOfAppeal(Date dateOfCase) {
+        this.dateOfAppeal = dateOfCase;
     }
 
     public List<Order> getOrderList() {

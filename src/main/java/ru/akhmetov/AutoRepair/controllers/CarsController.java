@@ -8,10 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.dto.CarDTO;
 import ru.akhmetov.AutoRepair.mappers.CarsMapper;
-import ru.akhmetov.AutoRepair.mappers.CasesMapper;
+import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
 import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
-import ru.akhmetov.AutoRepair.services.CasesServiceImpl;
+import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.util.CarValidator;
 
 import java.util.stream.Collectors;
@@ -25,16 +25,16 @@ public class CarsController {
     private final CarsServiceImpl carsServiceImpl;
     private final CarValidator carValidator;
     private final CarsMapper carsMapper;
-    private final CasesMapper casesMapper;
-    private final CasesServiceImpl casesService;
+    private final AppealsMapper appealsMapper;
+    private final AppealsServiceImpl appealsService;
 
     @Autowired
-    public CarsController(CarsServiceImpl carsServiceImpl, CarValidator carValidator, CarsMapper carsMapper, CasesMapper casesMapper, CasesServiceImpl casesService) {
+    public CarsController(CarsServiceImpl carsServiceImpl, CarValidator carValidator, CarsMapper carsMapper, AppealsMapper appealsMapper, AppealsServiceImpl appealsService) {
         this.carsServiceImpl = carsServiceImpl;
         this.carValidator = carValidator;
         this.carsMapper = carsMapper;
-        this.casesMapper = casesMapper;
-        this.casesService = casesService;
+        this.appealsMapper = appealsMapper;
+        this.appealsService = appealsService;
     }
 
     @GetMapping()
@@ -48,13 +48,14 @@ public class CarsController {
     public String show(@PathVariable("id") int id, Model model) {
         Car car = carsServiceImpl.findOne(id);
         model.addAttribute("car", carsMapper.convertToCarDTO(car));
-        model.addAttribute("cases", casesService.getCasesByCar(car).stream()
-                .map(casesMapper::convertToCaseDTO).collect(Collectors.toList()));
+        model.addAttribute("appeals", appealsService.getAppealsByCar(car).stream()
+                .map(appealsMapper::convertToAppealDTO).collect(Collectors.toList()));
 
         return "cars/show";
     }
     @GetMapping("/new")
-    public String newCar(@ModelAttribute("car") CarDTO carDTO) {
+    public String newCar(@ModelAttribute("car") CarDTO carDTO,
+                        @RequestParam(value = "owner_id", required = false) int owner_id) {
         return "cars/new";
     }
 

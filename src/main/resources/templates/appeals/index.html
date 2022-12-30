@@ -1,0 +1,21 @@
+<!-- Готов -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ремонты</title>
+</head>
+<body>
+
+<div th:each="appeal : ${appeals}">
+    <a th:href="@{/appeals/{id}(id=${appeal.getId()})}"
+       th:text="${appeal.getName() + ', ' + appeal.getDateOfAppeal()}">appeal</a>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/appeals/new">Добавить ремонт</a>
+
+</body>
+</html>
