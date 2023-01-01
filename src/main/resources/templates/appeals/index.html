@@ -6,7 +6,7 @@
     <title>Ремонты</title>
 </head>
 <body>
-
+<div th:insert="common :: com"></div>
 <div th:each="appeal : ${appeals}">
     <a th:href="@{/appeals/{id}(id=${appeal.getId()})}"
        th:text="${appeal.getName() + ', ' + appeal.getDateOfAppeal()}">appeal</a>

@@ -5,6 +5,7 @@
     <title>Show</title>
 </head>
 <body>
+<div th:insert="common :: com"></div>
 <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</p>
 <!-- Не взял ни одной книги -->
 <div th:if="${books.isEmpty()}">

@@ -6,7 +6,7 @@
     <title>Машины</title>
 </head>
 <body>
-
+<div th:insert="common :: com"></div>
 <div th:each="car : ${cars}">
     <a th:href="@{/cars/{id}(id=${car.getId()})}"
        th:text="${car.getModel() + ', ' + car.getStateNumber()}">Car</a>

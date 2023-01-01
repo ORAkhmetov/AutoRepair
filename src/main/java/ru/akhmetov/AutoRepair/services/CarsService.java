@@ -17,7 +17,7 @@ public interface CarsService {
     void update(int id, Car updatedCar) ;
     void delete(int id);
     public List<Car> getCarsByClient(Client client);
-    default void enrichCar(Car car) {
-
+    default void enrichCar(Car car, Client client) {
+        car.setOwner(client);
     }
 }

@@ -6,7 +6,7 @@
   <title>Новое обращение</title>
 </head>
 <body>
-
+<div th:insert="common :: com"></div>
 <form th:method="POST" th:action="@{/appeals}" th:object="${appeal}">
   <label for="name">Введите имя: </label>
   <input type="text" th:field="*{name}" id="name"/>

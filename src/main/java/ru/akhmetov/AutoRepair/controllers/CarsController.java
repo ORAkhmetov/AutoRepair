@@ -2,6 +2,7 @@ package ru.akhmetov.AutoRepair.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
 import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
 import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
+import ru.akhmetov.AutoRepair.services.ClientsServiceImpl;
 import ru.akhmetov.AutoRepair.util.CarValidator;
 
 import java.util.stream.Collectors;
@@ -22,19 +24,26 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/cars")
 public class CarsController {
+
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    private static int ownerCreatedCar;
     private final CarsServiceImpl carsServiceImpl;
     private final CarValidator carValidator;
     private final CarsMapper carsMapper;
     private final AppealsMapper appealsMapper;
     private final AppealsServiceImpl appealsService;
+    private final ClientsServiceImpl clientsService;
 
     @Autowired
-    public CarsController(CarsServiceImpl carsServiceImpl, CarValidator carValidator, CarsMapper carsMapper, AppealsMapper appealsMapper, AppealsServiceImpl appealsService) {
+    public CarsController(CarsServiceImpl carsServiceImpl, CarValidator carValidator, CarsMapper carsMapper, AppealsMapper appealsMapper, AppealsServiceImpl appealsService, ClientsServiceImpl clientsService) {
         this.carsServiceImpl = carsServiceImpl;
         this.carValidator = carValidator;
         this.carsMapper = carsMapper;
         this.appealsMapper = appealsMapper;
         this.appealsService = appealsService;
+        this.clientsService = clientsService;
     }
 
     @GetMapping()
@@ -56,6 +65,7 @@ public class CarsController {
     @GetMapping("/new")
     public String newCar(@ModelAttribute("car") CarDTO carDTO,
                         @RequestParam(value = "owner_id", required = false) int owner_id) {
+        ownerCreatedCar = owner_id;
         return "cars/new";
     }
 
@@ -66,7 +76,8 @@ public class CarsController {
         carValidator.validate(car, bindingResult);
         if (bindingResult.hasErrors())
             return "cars/new";
-
+        carsServiceImpl.enrichCar(car, clientsService.findOne(ownerCreatedCar));
+        ownerCreatedCar = 0;
         carsServiceImpl.save(car);
         return "redirect:/cars";
     }

@@ -6,7 +6,7 @@
   <title>Новая машина</title>
 </head>
 <body>
-
+<div th:insert="common :: com"></div>
 <form th:method="POST" th:action="@{/cars}" th:object="${car}">
   <label for="model">Введите модель: </label>
   <input type="text" th:field="*{model}" id="model"/>
