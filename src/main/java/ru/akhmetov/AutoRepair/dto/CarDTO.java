@@ -19,6 +19,7 @@ public class CarDTO {
 
     @NotEmpty(message = "VIN не должен быть пустым")
     private String vin;
+    private String filename;
 
     private Client owner;
     public CarDTO(Car car) {
@@ -69,5 +70,13 @@ public class CarDTO {
 
     public void setOwner(Client owner) {
         this.owner = owner;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

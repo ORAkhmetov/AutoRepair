@@ -8,19 +8,28 @@
 <body>
 <div th:insert="common :: com"></div>
 <form th:method="POST" th:action="@{/cars}" th:object="${car}">
-  <label for="model">Введите модель: </label>
-  <input type="text" th:field="*{model}" id="model"/>
-  <div style="color:red" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Model Error</div>
-  <br/>
-  <label for="model">Введите госномер: </label>
-  <input type="text" th:field="*{stateNumber}" id="stateNumber"/>
-  <div style="color:red" th:if="${#fields.hasErrors('stateNumber')}" th:errors="*{stateNumber}">StateNumber Error</div>
-  <br/>
-  <label for="model">Введите VIN: </label>
-  <input type="text" th:field="*{vin}" id="vin"/>
-  <div style="color:red" th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}">vin Error</div>
-  <br/>
-  <input type="submit" value="Добавить машину"/>
+  <div class="mb-3">
+    <label for="model" class="form-label">Модель:</label>
+    <input type="text" class="form-control" placeholder="Введите модель" th:field="*{model}" id="model">
+    <div style="color:red" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Model Error</div>
+  </div>
+  <div class="mb-3">
+    <label for="stateNumber" class="form-label">Госномер:</label>
+    <input type="text" class="form-control" placeholder="x999xx999" th:field="*{stateNumber}" id="stateNumber">
+    <div style="color:red" th:if="${#fields.hasErrors('stateNumber')}" th:errors="*{stateNumber}">stateNumber Error</div>
+  </div>
+  <div class="mb-3">
+    <label for="vin" class="form-label">VIN:</label>
+    <input type="text" class="form-control" placeholder="123123123" th:field="*{vin}" id="vin">
+    <div style="color:red" th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}">vin Error</div>
+  </div>
+  <div class="mb-3">
+    <label for="filename" class="form-label">Укажите ссылку на изображение:</label>
+    <input type="text" class="form-control" placeholder="https://..." th:field="*{filename}" id="filename">
+    <div style="color:red" th:if="${#fields.hasErrors('filename')}" th:errors="*{filename}">filename Error</div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg">Добавить машину</button>
 </form>
 
 

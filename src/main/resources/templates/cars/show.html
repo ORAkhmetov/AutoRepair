@@ -6,43 +6,55 @@
 </head>
 <body>
 <div th:insert="common :: com"></div>
-<div th:if="${car.getOwner() == null}">
-    <p style="color:red">Владелец: Нет данных о владельце</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <img th:src="@{${car.getFilename()}}" class="img-fluid" alt="Not found">
+        </div>
+        <div class="col">
+            <p th:text="${'Модель: ' + car.getModel()}" style="font-size: xx-large">VALUE</p>
+            <div th:if="${car.getOwner() == null}">
+                <p style="color:red; font-size: large">Владелец: Нет данных о владельце</p>
+            </div>
+            <div th:if="${car.getOwner() != null}">
+                <a th:href="@{/clients/{id}(id=${car.getOwner().getId()})}" style="font-size: large" th:text="${'Владелец: ' + car.getOwner().getFullName()}">VALUE</a>
+            </div>
+            <br/>
+            <p th:text="${'Госномер: ' + car.getStateNumber()}" style="font-size: large">VALUE</p>
+            <p th:text="${'VIN: ' + car.getVin()}" style="font-size: large">VALUE</p>
+            <form th:method="GET" th:action="@{/cars/{id}/edit(id=${car.getId()})}">
+                <button type="submit" class="btn btn-primary btn-lg">Редактировать</button>
+            </form>
+            <br/>
+            <form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getId()})}">
+                <button type="submit" class="btn btn-primary btn-lg">Удалить</button>
+            </form>
+        </div>
+        <div class="col">
+            <!-- Не добавлено ни одного ремонта -->
+            <div th:if="${appeals.isEmpty()}">
+                <p>Для данной машины еще не добавлено ни одного ремонта</p>
+                <hr/>
+            </div>
+
+            <!-- Отображаем ремонты -->
+            <!--<div th:if="${!cases.isEmpty()}">
+                <hr/>
+                <b>:</b>
+                <br/>
+                <table th:each="case : ${cases}">
+                    <tr>
+                        <td>
+                            <span  th:text="${case.getModel() + ', ' + case.getStateNumber()}">case</span>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+            </div>-->
+
+
+        </div>
+    </div>
 </div>
-<div th:if="${car.getOwner() != null}">
-    <a th:href="@{/clients/{id}(id=${car.getOwner().getId()})}" th:text="${'Владелец: ' + car.getOwner().getFullName()}">VALUE</a>
-</div>
-<p th:text="${'Модель: ' + car.getModel()}">VALUE</p>
-<p th:text="${'Госномер: ' + car.getStateNumber()}">VALUE</p>
-<p th:text="${'VIN: ' + car.getVin()}">VALUE</p>
-<!-- Не добавлено ни одного ремонта -->
-<div th:if="${appeals.isEmpty()}">
-    <p>Для данной машины еще не добавлено ни одного ремонта</p>
-    <hr/>
-</div>
-
-<!-- Отображаем ремонты -->
-<!--<div th:if="${!cases.isEmpty()}">
-    <hr/>
-    <b>:</b>
-    <br/>
-    <table th:each="case : ${cases}">
-        <tr>
-            <td>
-                <span  th:text="${case.getModel() + ', ' + case.getStateNumber()}">case</span>
-            </td>
-        </tr>
-    </table>
-    <hr/>
-</div>-->
-
-<form th:method="GET" th:action="@{/cars/{id}/edit(id=${car.getId()})}">
-    <input type="submit" value="Редактировать"/>
-</form>
-
-<form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getId()})}">
-    <input type="submit" value="Удалить"/>
-</form>
-
 </body>
 </html>

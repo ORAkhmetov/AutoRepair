@@ -34,6 +34,8 @@ public class Car {
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client owner;
 
+    @Column(name = "filename")
+    private String filename;
     @OneToMany(mappedBy = "car")
     private List<Appeal> appealList;
 
@@ -99,5 +101,13 @@ public class Car {
 
     public void setAppealList(List<Appeal> appealList) {
         this.appealList = appealList;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

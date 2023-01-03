@@ -6,20 +6,40 @@
 </head>
 <body>
 <div th:insert="common :: com"></div>
-<p>Клиенты:</p>
-<hr/>
-<div th:each="client : ${clients}">
-    <a th:href="@{/clients/{id}(id=${client.getId()})}"
-       th:text="${client.getFullName()}">AUser</a>
+<div class="container-fluid">
+    <p>Клиенты:</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Автомобили</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="client : ${clients}">
+            <tr>
+                <th scope="row" th:text="${client.getId()}">n</th>
+                <td>
+                    <a th:href="@{/clients/{id}(id=${client.getId()})}"
+                       th:text="${client.getFullName()}">AUser</a>
+                </td>
+                <td>
+                    <div th:each="car : ${client.getCarList()}">
+                        <a th:href="@{/cars/{id}(id=${car.getId()})}"
+                           th:text="${car.getModel()}">AUser</a>
+                    </div>
+                </td>
+
+            </tr>
+
+        </div>
+        </tbody>
+    </table>
+    <form th:method="GET" th:action="@{/clients/new}">
+        <button type="submit" class="btn btn-primary btn-lg">Добавить нового клиента</button>
+    </form>
 </div>
-
-<br/>
-<hr/>
-
-<form th:method="GET" th:action="@{/clients/new}">
-    <input type="submit" value="Добавить нового клиента"/>
-</form>
-<br/>
 
 </body>
 </html>

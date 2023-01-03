@@ -8,11 +8,12 @@
 <body>
 <div th:insert="common :: com"></div>
 <form th:method="PATCH" th:action="@{/clients/{id}(id=${client.getId()})}" th:object="${client}">
-    <label for="fullName">Введите уникальное имя клиента: </label>
-    <input type="text" th:field="*{fullName}" id="fullName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</div>
-    <br/>
-    <input type="submit" value="Сохранить изменения"/>
+    <div class="mb-3">
+        <label for="fullName" class="form-label">Имя клиента:</label>
+        <input type="text" class="form-control" placeholder="Введите уникальное имя клиента" th:field="*{fullName}" id="fullName">
+        <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Сохранить изменения</button>
 </form>
 
 </body>

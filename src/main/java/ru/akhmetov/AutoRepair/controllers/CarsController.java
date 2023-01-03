@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.akhmetov.AutoRepair.dto.CarDTO;
 import ru.akhmetov.AutoRepair.mappers.CarsMapper;
 import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
@@ -16,6 +17,10 @@ import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.services.ClientsServiceImpl;
 import ru.akhmetov.AutoRepair.util.CarValidator;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+import java.util.logging.FileHandler;
 import java.util.stream.Collectors;
 
 /**
@@ -64,19 +69,25 @@ public class CarsController {
     }
     @GetMapping("/new")
     public String newCar(@ModelAttribute("car") CarDTO carDTO,
-                        @RequestParam(value = "owner_id", required = false) int owner_id) {
-        ownerCreatedCar = owner_id;
+                         @RequestParam(value = "owner_id", required = false) String owner_id) {
+        if (owner_id == null)
+            ownerCreatedCar = 0;
+        else
+            ownerCreatedCar = Integer.parseInt(owner_id);
         return "cars/new";
     }
 
     @PostMapping()
     public String create(@ModelAttribute("car") @Valid CarDTO carDTO,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult) throws IOException {
         Car car = carsMapper.convertToCar(carDTO);
         carValidator.validate(car, bindingResult);
         if (bindingResult.hasErrors())
             return "cars/new";
-        carsServiceImpl.enrichCar(car, clientsService.findOne(ownerCreatedCar));
+        if (ownerCreatedCar == 0)
+            carsServiceImpl.enrichCar(car, null);
+        else
+            carsServiceImpl.enrichCar(car, clientsService.findOne(ownerCreatedCar));
         ownerCreatedCar = 0;
         carsServiceImpl.save(car);
         return "redirect:/cars";
@@ -88,12 +99,22 @@ public class CarsController {
     }
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("car") @Valid CarDTO carDTO, BindingResult bindingResult,
-                         @PathVariable("id") int id) {
+                         @RequestParam(value = "filename", required = false) MultipartFile file,
+                         @PathVariable("id") int id) throws IOException {
         Car car = carsMapper.convertToCar(carDTO);
         carValidator.validate(car, bindingResult);//Добавил, не было в рыбе
         if (bindingResult.hasErrors())
             return "cars/edit";
-
+        if (file != null) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(resultFileName));
+            car.setFilename(String.valueOf(file));
+        }
         carsServiceImpl.update(id, car);
         return "redirect:/cars";
     }
