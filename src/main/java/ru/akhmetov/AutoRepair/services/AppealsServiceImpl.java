@@ -31,7 +31,6 @@ public class AppealsServiceImpl implements AppealsService {
     }
     @Transactional
     public void save(Appeal appeal) {
-        enrichCase(appeal);
         appealsRepository.save(appeal);
     }
     @Transactional

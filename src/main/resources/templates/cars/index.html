@@ -7,6 +7,9 @@
 <body>
 <div th:insert="common :: com"></div>
 <div class="container-fluid">
+    <form th:method="GET" th:action="@{/cars/new}">
+        <button type="submit" class="btn btn-primary btn-lg">Добавить новую машину</button>
+    </form>
     <div class="row">
         <div class="card-group">
             <div th:each="car : ${cars}">
@@ -22,10 +25,5 @@
         </div>
     </div>
 </div>
-        <br/>
-        <hr/>
-
-<a href="/cars/new">Добавить машину</a>
-
 </body>
 </html>

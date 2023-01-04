@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.dto.OrderDTO;
 import ru.akhmetov.AutoRepair.mappers.OrdersMapper;
-import ru.akhmetov.AutoRepair.models.Client;
 import ru.akhmetov.AutoRepair.models.Order;
+import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.services.OrdersServiceImpl;
 import ru.akhmetov.AutoRepair.util.OrderValidator;
 
@@ -21,15 +21,18 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/orders")
 public class OrdersController {
+    private static int appealCreatedOrder;
 
     private final OrdersServiceImpl ordersServiceImpl;
     private final OrderValidator orderValidator;
     private final OrdersMapper ordersMapper;
+    private final AppealsServiceImpl appealsService;
     @Autowired
-    public OrdersController(OrdersServiceImpl ordersServiceImpl, OrderValidator orderValidator, OrdersMapper ordersMapper) {
+    public OrdersController(OrdersServiceImpl ordersServiceImpl, OrderValidator orderValidator, OrdersMapper ordersMapper, AppealsServiceImpl appealsService) {
         this.ordersServiceImpl = ordersServiceImpl;
         this.orderValidator = orderValidator;
         this.ordersMapper = ordersMapper;
+        this.appealsService = appealsService;
     }
 
     @GetMapping()
@@ -45,7 +48,12 @@ public class OrdersController {
         return "orders/show";
     }
     @GetMapping("/new")
-    public String newOrder(@ModelAttribute("order") OrderDTO orderDTO) {
+    public String newOrder(@ModelAttribute("order") OrderDTO orderDTO,
+                           @RequestParam(value = "appeal_id", required = false) String appeal_id) {
+        if (appeal_id == null)
+            appealCreatedOrder = 0;
+        else
+            appealCreatedOrder = Integer.parseInt(appeal_id);
         return "orders/new";
     }
 
@@ -56,7 +64,11 @@ public class OrdersController {
         orderValidator.validate(order, bindingResult);
         if (bindingResult.hasErrors())
             return "orders/new";
-
+        if (appealCreatedOrder == 0)
+            ordersServiceImpl.enrichOrder(order, null);
+        else
+            ordersServiceImpl.enrichOrder(order, appealsService.findOne(appealCreatedOrder));
+        appealCreatedOrder = 0;
         ordersServiceImpl.save(order);
         return "redirect:/orders";
     }

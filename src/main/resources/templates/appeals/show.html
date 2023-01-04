@@ -2,40 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Show</title>
+    <title>Обращение</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
-<p th:text="${appeal.getName()}">VALUE</p>
-<p th:text="${'Владелец: ' + appeal.getCar().getOwner().getFullName()}">VALUE</p>
-<p th:text="${appeal.getCar().getModel()}">VALUE</p>
-<!-- Не добавлено ни одного ордера -->
-<div th:if="${orders.isEmpty()}">
-    <p>Для данного ремонта еще не добавлено ни одного ордера</p>
-    <hr/>
+<div th:insert="~{common :: com}"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <p th:text="${appeal.getName()}" style="font-size: xx-large">VALUE</p>
+            <p th:text="${'Модель: ' + appeal.getCar().getModel()}" style="font-size: x-large">VALUE</p>
+
+
+            <p th:text="${'Пробег: ' + appeal.getMileage()}" style="font-size: large">VALUE</p>
+            <p th:text="${'Дата ремонта: ' + appeal.getDateOfAppeal()}" style="font-size: large">VALUE</p>
+            <p th:text="${'Описание неисправности: ' + appeal.getFaultDescription()}" style="font-size: large">VALUE</p>
+            <form th:method="GET" th:action="@{/appeals/{id}/edit(id=${appeal.getId()})}">
+                <button type="submit" class="btn btn-primary btn-lg">Редактировать</button>
+            </form>
+            <br/>
+            <form th:method="DELETE" th:action="@{/appeals/{id}(id=${appeal.getId()})}">
+                <button type="submit" class="btn btn-primary btn-lg">Удалить</button>
+            </form>
+        </div>
+        <div class="col">
+            <form th:method="GET" th:action="@{/orders/new}">
+                <button type="submit" class="btn btn-primary btn-lg" th:name="appeal_id" th:value="${appeal.getId()}">Добавить ордер</button>
+            </form>
+            <!-- Не добавлено ни одного ордера -->
+            <div th:if="${orders.isEmpty()}">
+                <p>Для данного ремонта еще не добавлено ни одного ордера</p>
+                <hr/>
+            </div>
+
+            <!-- Отображаем ремонты -->
+            <!--<div th:if="${!cases.isEmpty()}">
+                <hr/>
+                <b>:</b>
+                <br/>
+                <table th:each="case : ${cases}">
+                    <tr>
+                        <td>
+                            <span  th:text="${case.getModel() + ', ' + case.getStateNumber()}">case</span>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+            </div>-->
+        </div>
+    </div>
 </div>
 
-<!-- Отображаем ремонты -->
-<!--<div th:if="${!cases.isEmpty()}">
-    <hr/>
-    <b>:</b>
-    <br/>
-    <table th:each="case : ${cases}">
-        <tr>
-            <td>
-                <span  th:text="${case.getModel() + ', ' + case.getStateNumber()}">case</span>
-            </td>
-        </tr>
-    </table>
-    <hr/>
-</div>-->
-
-<form th:method="GET" th:action="@{/appeals/{id}/edit(id=${appeal.getId()})}">
-    <input type="submit" value="Редактировать"/>
-</form>
-<br/>
-<form th:method="DELETE" th:action="@{/appeal/{id}(id=${appeal.getId()})}">
-    <input type="submit" value="Удалить"/>
-</form>
 </body>
 </html>

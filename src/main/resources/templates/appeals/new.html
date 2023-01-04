@@ -7,26 +7,27 @@
 </head>
 <body>
 <div th:insert="common :: com"></div>
-<form th:method="POST" th:action="@{/appeals}" th:object="${appeal}">
-  <div class="mb-3">
-    <label for="name" class="form-label">Наименование</label>
-    <input type="text" class="form-control" placeholder="Введите наименование неисправности" th:field="*{name}" id="name">
-    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-  </div>
-  <div class="mb-3">
-    <label for="faultDescription" class="form-label">Описание неисправности</label>
-    <input type="text" class="form-control" placeholder="Введите наименование неисправности" th:field="*{faultDescription}" id="faultDescription">
-    <div style="color:red" th:if="${#fields.hasErrors('faultDescription')}" th:errors="*{faultDescription}">Name Error</div>
-  </div>
-  <div class="mb-3">
-    <label for="mileage" class="form-label">Пробег</label>
-    <input type="text" class="form-control" placeholder="Введите пробег" th:field="*{mileage}" id="mileage">
-    <div style="color:red" th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}">fault Description</div>
-  </div>
+<div class="container">
+  <form th:method="POST" th:action="@{/appeals}" th:object="${appeal}">
+    <div class="mb-3">
+      <label for="name" class="form-label">Тип работ</label>
+      <input type="text" class="form-control" placeholder="Введите тип произведенных работ" th:field="*{name}" id="name">
+      <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    </div>
+    <div class="mb-3">
+      <label for="faultDescription" class="form-label">Описание неисправности</label>
+      <input type="text" class="form-control" placeholder="Описание неисправности" th:field="*{faultDescription}" id="faultDescription">
+      <div style="color:red" th:if="${#fields.hasErrors('faultDescription')}" th:errors="*{faultDescription}">Name Error</div>
+    </div>
+    <div class="mb-3">
+      <label for="mileage" class="form-label">Пробег</label>
+      <input type="text" class="form-control" placeholder="Введите пробег" th:field="*{mileage}" id="mileage">
+      <div style="color:red" th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}">fault Description</div>
+    </div>
 
-  <button type="submit" class="btn btn-primary btn-lg">Создать</button>
-</form>
-
+    <button type="submit" class="btn btn-primary btn-lg">Создать</button>
+  </form>
+</div>
 </body>
 </html>
 

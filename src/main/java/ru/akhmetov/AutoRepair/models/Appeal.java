@@ -3,6 +3,7 @@ package ru.akhmetov.AutoRepair.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,12 +35,12 @@ public class Appeal {
     private int mileage;
 
     @Column(name = "date_of_appeal")
-    private Date dateOfAppeal;
+    private LocalDate dateOfAppeal;
 
     @OneToMany(mappedBy = "appeal")
     private List<Order> orderList;
 
-    public Appeal(Car car, int mileage, Date dateOfAppeal) {
+    public Appeal(Car car, int mileage, LocalDate dateOfAppeal) {
         this.car = car;
         this.mileage = mileage;
         this.dateOfAppeal = dateOfAppeal;
@@ -74,11 +75,11 @@ public class Appeal {
         this.mileage = mileage;
     }
 
-    public Date getDateOfAppeal() {
+    public LocalDate getDateOfAppeal() {
         return dateOfAppeal;
     }
 
-    public void setDateOfAppeal(Date dateOfCase) {
+    public void setDateOfAppeal(LocalDate dateOfCase) {
         this.dateOfAppeal = dateOfCase;
     }
 

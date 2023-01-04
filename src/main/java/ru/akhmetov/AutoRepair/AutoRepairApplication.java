@@ -32,7 +32,7 @@ public class AutoRepairApplication {
 				.setFieldAccessLevel(PRIVATE);*/
 		return mapper;
 	}
-	@Configuration
+	/*@Configuration
 	public static class MvcConfig implements WebMvcConfigurer {
 		@Value("${upload.path}")
 		private String uploadPath;
@@ -42,5 +42,5 @@ public class AutoRepairApplication {
 					.addResourceLocations("file:///C:/Data/img/");
 			//.addResourceLocations("file://" + uploadPath + "/");
 		}
-	}
+	}*/
 }

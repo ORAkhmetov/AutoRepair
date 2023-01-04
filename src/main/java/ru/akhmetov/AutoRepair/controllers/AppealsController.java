@@ -11,6 +11,7 @@ import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
 import ru.akhmetov.AutoRepair.mappers.OrdersMapper;
 import ru.akhmetov.AutoRepair.models.Appeal;
 import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
+import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
 import ru.akhmetov.AutoRepair.services.OrdersServiceImpl;
 import ru.akhmetov.AutoRepair.util.AppealValidator;
 
@@ -22,19 +23,22 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/appeals")
 public class AppealsController {
+    private static int carCreatedAppeal;
     private final AppealsServiceImpl appealsServiceImpl;
     private final AppealValidator appealValidator;
     private final AppealsMapper appealsMapper;
 
     private final OrdersServiceImpl ordersService;
     private final OrdersMapper ordersMapper;
+    private final CarsServiceImpl carsService;
     @Autowired
-    public AppealsController(AppealsServiceImpl appealsServiceImpl, AppealValidator appealValidator, AppealsMapper appealsMapper, OrdersServiceImpl ordersService, OrdersMapper ordersMapper) {
+    public AppealsController(AppealsServiceImpl appealsServiceImpl, AppealValidator appealValidator, AppealsMapper appealsMapper, OrdersServiceImpl ordersService, OrdersMapper ordersMapper, CarsServiceImpl carsService) {
         this.appealsServiceImpl = appealsServiceImpl;
         this.appealValidator = appealValidator;
         this.appealsMapper = appealsMapper;
         this.ordersService = ordersService;
         this.ordersMapper = ordersMapper;
+        this.carsService = carsService;
     }
     @GetMapping()
     public String index(Model model) {
@@ -52,7 +56,12 @@ public class AppealsController {
         return "appeals/show";
     }
     @GetMapping("/new")
-    public String newAppeal(@ModelAttribute("appeal") AppealDTO appealDTO) {
+    public String newAppeal(@ModelAttribute("appeal") AppealDTO appealDTO,
+                            @RequestParam(value = "car_id", required = false) String car_id) {
+        if (car_id == null)
+            carCreatedAppeal = 0;
+        else
+            carCreatedAppeal = Integer.parseInt(car_id);
         return "appeals/new";
     }
 
@@ -63,7 +72,11 @@ public class AppealsController {
         appealValidator.validate(appeal, bindingResult);
         if (bindingResult.hasErrors())
             return "appeals/new";
-
+        if (carCreatedAppeal == 0)
+            appealsServiceImpl.enrichAppeal(appeal, null);
+        else
+            appealsServiceImpl.enrichAppeal(appeal, carsService.findOne(carCreatedAppeal));
+        carCreatedAppeal = 0;
         appealsServiceImpl.save(appeal);
         return "redirect:/appeals";
     }

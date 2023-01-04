@@ -2,12 +2,10 @@ package ru.akhmetov.AutoRepair.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.akhmetov.AutoRepair.dto.CarDTO;
 import ru.akhmetov.AutoRepair.mappers.CarsMapper;
 import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
@@ -15,12 +13,10 @@ import ru.akhmetov.AutoRepair.models.Car;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
 import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.services.ClientsServiceImpl;
+import ru.akhmetov.AutoRepair.services.OrdersServiceImpl;
 import ru.akhmetov.AutoRepair.util.CarValidator;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
-import java.util.logging.FileHandler;
 import java.util.stream.Collectors;
 
 /**
@@ -29,9 +25,6 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/cars")
 public class CarsController {
-
-    @Value("${upload.path}")
-    private String uploadPath;
 
     private static int ownerCreatedCar;
     private final CarsServiceImpl carsServiceImpl;
@@ -99,22 +92,12 @@ public class CarsController {
     }
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("car") @Valid CarDTO carDTO, BindingResult bindingResult,
-                         @RequestParam(value = "filename", required = false) MultipartFile file,
                          @PathVariable("id") int id) throws IOException {
         Car car = carsMapper.convertToCar(carDTO);
         carValidator.validate(car, bindingResult);//Добавил, не было в рыбе
         if (bindingResult.hasErrors())
             return "cars/edit";
-        if (file != null) {
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(resultFileName));
-            car.setFilename(String.valueOf(file));
-        }
+
         carsServiceImpl.update(id, car);
         return "redirect:/cars";
     }

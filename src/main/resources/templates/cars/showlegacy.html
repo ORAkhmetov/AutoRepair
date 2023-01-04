@@ -39,29 +39,15 @@
                 <p>Для данной машины еще не добавлено ни одного ремонта</p>
                 <hr/>
             </div>
-            <div class="list-group">
-                <div th:if="${!appeals.isEmpty()}">
-                    <div th:each="appeal : ${appeals}">
-                        <a th:href="@{/appeals/{id}(id=${appeal.getId()})}" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1" th:text="${appeal.getName()}">List group item heading</h5>
-                                <small>
-                                    <p th:text="${'Пробег: ' + appeal.getMileage()}">Пробег</p>
-                                </small>
-                            </div>
-                            <p class="mb-1" th:text="${appeal.getFaultDescription()}">Some placeholder content in a paragraph.</p>
-                            <small class="text-muted">
-                                <i th:text="${'Дата ремонта: ' + appeal.getDateOfAppeal()}">Дата</i>
-                            </small>
-                        </a>
-                            <!--<div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${appeal.getName()}">Special title treatment</h5>
-                                    <p class="card-text" th:text="${appeal.getFaultDescription()}">With supporting text below as a natural lead-in to additional content.</p>
-                                    <p class="card-text"><small class="text-muted" th:text="${appeal.getDateOfAppeal()}">Last updated 3 mins ago</small></p>
-                                    <a th:href="@{/appeals/{id}(id=${appeal.getId()})}" class="btn btn-primary">Подробнее</a>
-                                </div>
-                            </div>-->
+            <div th:if="${!appeals.isEmpty()}">
+                <div th:each="appeal : ${appeals}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${appeal.getName()}">Special title treatment</h5>
+                            <p class="card-text" th:text="${appeal.getFaultDescription()}">With supporting text below as a natural lead-in to additional content.</p>
+                            <p class="card-text"><small class="text-muted" th:text="${appeal.getDateOfAppeal()}">Last updated 3 mins ago</small></p>
+                            <a th:href="@{/appeals/{id}(id=${appeal.getId()})}" class="btn btn-primary">Подробнее</a>
+                        </div>
                     </div>
                 </div>
             </div>

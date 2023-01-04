@@ -3,6 +3,7 @@ package ru.akhmetov.AutoRepair.dto;
 import jakarta.validation.constraints.Min;
 import ru.akhmetov.AutoRepair.models.Car;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -21,7 +22,7 @@ public class AppealDTO {
     @Min(value = 0, message = "Пробег не должен быть меньше нуля")
     private int mileage;
 
-    private Date dateOfAppeal;
+    private LocalDate dateOfAppeal;
 
     public AppealDTO() {
     }
@@ -50,11 +51,11 @@ public class AppealDTO {
         this.mileage = mileage;
     }
 
-    public Date getDateOfAppeal() {
+    public LocalDate getDateOfAppeal() {
         return dateOfAppeal;
     }
 
-    public void setDateOfAppeal(Date dateOfAppeal) {
+    public void setDateOfAppeal(LocalDate dateOfAppeal) {
         this.dateOfAppeal = dateOfAppeal;
     }
 

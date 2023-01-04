@@ -7,7 +7,9 @@
 <body>
 <div th:insert="common :: com"></div>
 <div class="container-fluid">
-    <p>Клиенты:</p>
+    <form th:method="GET" th:action="@{/clients/new}">
+        <button type="submit" class="btn btn-primary btn-lg">Добавить нового клиента</button>
+    </form>
     <table class="table">
         <thead>
         <tr>
@@ -30,15 +32,10 @@
                            th:text="${car.getModel()}">AUser</a>
                     </div>
                 </td>
-
             </tr>
-
         </div>
         </tbody>
     </table>
-    <form th:method="GET" th:action="@{/clients/new}">
-        <button type="submit" class="btn btn-primary btn-lg">Добавить нового клиента</button>
-    </form>
 </div>
 
 </body>

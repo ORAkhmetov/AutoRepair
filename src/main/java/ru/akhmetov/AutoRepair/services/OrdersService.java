@@ -1,5 +1,6 @@
 package ru.akhmetov.AutoRepair.services;
 
+import ru.akhmetov.AutoRepair.models.Appeal;
 import ru.akhmetov.AutoRepair.models.Order;
 
 import java.util.List;
@@ -13,5 +14,7 @@ public interface OrdersService {
     void save(Order order);
     void update(int id, Order updatedOrder) ;
     void delete(int id);
-    default void enrichOrder(Order order) {}
+    default void enrichOrder(Order order, Appeal appeal) {
+        order.setAppeal(appeal);
+    }
 }

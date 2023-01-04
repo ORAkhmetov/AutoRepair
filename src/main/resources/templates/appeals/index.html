@@ -7,15 +7,29 @@
 </head>
 <body>
 <div th:insert="common :: com"></div>
-<div th:each="appeal : ${appeals}">
-    <a th:href="@{/appeals/{id}(id=${appeal.getId()})}"
-       th:text="${appeal.getName() + ', ' + appeal.getDateOfAppeal()}">appeal</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <div th:each="appeal : ${appeals}">
+                <div class="card w-50">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${appeal.getName()}">Special title treatment</h5>
+                        <p class="card-text" th:text="${appeal.getFaultDescription()}">With supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><small class="text-muted" th:text="${appeal.getDateOfAppeal()}">Last updated 3 mins ago</small></p>
+                        <a th:href="@{/appeals/{id}(id=${appeal.getId()})}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        <a th:href="@{/appeals/{id}(id=${appeal.getId()})}"
+       th:text="${appeal.getName() + ', ' + appeal.getDateOfAppeal()}">appeal</a>-->
+
+<!--
+    <br/>
+    <hr/>
+
+    <a href="/appeals/new">Добавить ремонт</a>-->
+    </div>
 </div>
-
-<br/>
-<hr/>
-
-<a href="/appeals/new">Добавить ремонт</a>
-
 </body>
 </html>
