@@ -5,7 +5,7 @@
     <title th:text="${car.getModel()}">Информация об автомобиле</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
+<div th:insert="~{common :: com}"></div>
 <div class="container-fluid">
     <div class="row">
         <div class="col">
@@ -22,13 +22,18 @@
             <br/>
             <p th:text="${'Госномер: ' + car.getStateNumber()}" style="font-size: large">VALUE</p>
             <p th:text="${'VIN: ' + car.getVin()}" style="font-size: large">VALUE</p>
-            <form th:method="GET" th:action="@{/cars/{id}/edit(id=${car.getId()})}">
-                <button type="submit" class="btn btn-primary btn-lg">Редактировать</button>
-            </form>
-            <br/>
-            <form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getId()})}">
-                <button type="submit" class="btn btn-primary btn-lg">Удалить</button>
-            </form>
+            <div class="row row-cols-auto">
+                <div class="col">
+                    <form th:method="GET" th:action="@{/cars/{id}/edit(id=${car.getId()})}">
+                        <button type="submit" class="btn btn-primary btn-lg">Редактировать</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <form th:method="DELETE" th:action="@{/cars/{id}(id=${car.getId()})}">
+                        <button type="submit" class="btn btn-primary btn-lg">Удалить</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col">
             <form th:method="GET" th:action="@{/appeals/new}">
@@ -39,8 +44,8 @@
                 <p>Для данной машины еще не добавлено ни одного ремонта</p>
                 <hr/>
             </div>
-            <div class="list-group">
-                <div th:if="${!appeals.isEmpty()}">
+            <div th:if="${!appeals.isEmpty()}">
+                <div class="list-group">
                     <div th:each="appeal : ${appeals}">
                         <a th:href="@{/appeals/{id}(id=${appeal.getId()})}" class="list-group-item list-group-item-action">
                             <div class="d-flex w-100 justify-content-between">
@@ -54,14 +59,6 @@
                                 <i th:text="${'Дата ремонта: ' + appeal.getDateOfAppeal()}">Дата</i>
                             </small>
                         </a>
-                            <!--<div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${appeal.getName()}">Special title treatment</h5>
-                                    <p class="card-text" th:text="${appeal.getFaultDescription()}">With supporting text below as a natural lead-in to additional content.</p>
-                                    <p class="card-text"><small class="text-muted" th:text="${appeal.getDateOfAppeal()}">Last updated 3 mins ago</small></p>
-                                    <a th:href="@{/appeals/{id}(id=${appeal.getId()})}" class="btn btn-primary">Подробнее</a>
-                                </div>
-                            </div>-->
                     </div>
                 </div>
             </div>

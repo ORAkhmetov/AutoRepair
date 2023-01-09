@@ -102,4 +102,13 @@ public class AppealsController {
         appealsServiceImpl.delete(id);
         return "redirect:/appeals";
     }
+
+    @GetMapping("/{id}/orders")
+    public String showOrders(@PathVariable("id") int id, Model model) {
+        Appeal appeal = appealsServiceImpl.findOne(id);
+        model.addAttribute("appeal", appealsMapper.convertToAppealDTO(appeal));
+        model.addAttribute("orders", ordersService.getOrdersByAppeal(appeal).stream()
+                .map(ordersMapper::convertToOrderDTO).collect(Collectors.toList()));
+        return "orders/index";
+    }
 }

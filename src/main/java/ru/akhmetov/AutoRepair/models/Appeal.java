@@ -40,6 +40,9 @@ public class Appeal {
     @OneToMany(mappedBy = "appeal")
     private List<Order> orderList;
 
+    @OneToMany(mappedBy = "appeal")
+    private List<PhotoAppeal> photoAppealList;
+
     public Appeal(Car car, int mileage, LocalDate dateOfAppeal) {
         this.car = car;
         this.mileage = mileage;
@@ -105,5 +108,13 @@ public class Appeal {
 
     public void setFaultDescription(String faultDescription) {
         this.faultDescription = faultDescription;
+    }
+
+    public List<PhotoAppeal> getPhotoAppealList() {
+        return photoAppealList;
+    }
+
+    public void setPhotoAppealList(List<PhotoAppeal> photoAppealList) {
+        this.photoAppealList = photoAppealList;
     }
 }

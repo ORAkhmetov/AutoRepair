@@ -16,38 +16,77 @@
             <p th:text="${'Пробег: ' + appeal.getMileage()}" style="font-size: large">VALUE</p>
             <p th:text="${'Дата ремонта: ' + appeal.getDateOfAppeal()}" style="font-size: large">VALUE</p>
             <p th:text="${'Описание неисправности: ' + appeal.getFaultDescription()}" style="font-size: large">VALUE</p>
-            <form th:method="GET" th:action="@{/appeals/{id}/edit(id=${appeal.getId()})}">
-                <button type="submit" class="btn btn-primary btn-lg">Редактировать</button>
-            </form>
-            <br/>
-            <form th:method="DELETE" th:action="@{/appeals/{id}(id=${appeal.getId()})}">
-                <button type="submit" class="btn btn-primary btn-lg">Удалить</button>
-            </form>
+            <div class="row row-cols-auto">
+                <div class="col">
+                    <form th:method="GET" th:action="@{/appeals/{id}/orders(id=${appeal.getId()})}">
+                        <button type="submit" class="btn btn-primary btn-lg">Ордера</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <form th:method="GET" th:action="@{/appeals/{id}/edit(id=${appeal.getId()})}">
+                        <button type="submit" class="btn btn-primary btn-lg">Редактировать</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <form th:method="DELETE" th:action="@{/appeals/{id}(id=${appeal.getId()})}">
+                        <button type="submit" class="btn btn-primary btn-lg">Удалить</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col">
-            <form th:method="GET" th:action="@{/orders/new}">
-                <button type="submit" class="btn btn-primary btn-lg" th:name="appeal_id" th:value="${appeal.getId()}">Добавить ордер</button>
-            </form>
+            <p style="font-size: xx-large">Ордера</p>
             <!-- Не добавлено ни одного ордера -->
             <div th:if="${orders.isEmpty()}">
                 <p>Для данного ремонта еще не добавлено ни одного ордера</p>
                 <hr/>
             </div>
-
-            <!-- Отображаем ремонты -->
-            <!--<div th:if="${!cases.isEmpty()}">
-                <hr/>
-                <b>:</b>
-                <br/>
-                <table th:each="case : ${cases}">
+            <div th:if="${!orders.isEmpty()}">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td>
-                            <span  th:text="${case.getModel() + ', ' + case.getStateNumber()}">case</span>
-                        </td>
+                        <th scope="col">id</th>
+                        <th scope="col">Наименование работ</th>
+                        <th scope="col">Стоимость работ</th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="order : ${orders}">
+                        <tr>
+                            <th scope="row" th:text="${order.getId()}">id</th>
+                            <td>
+                                <a th:text="${order.getName()}">Name</a>
+                            </td>
+                            <td>
+                                <a th:text="${order.getValue() + ' руб.'}">Value</a>
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
                 </table>
-                <hr/>
-            </div>-->
+            </div>
+        </div>
+        <div class="col">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://sun3.userapi.com/sun3-8/s/v1/ig2/E0mCqgq4K60pY_C-DTkH_wFkD9ttHOyd95tzO0i672neO7wAI6uKZ1Qj0giyFOb3aerlj_rVmcb5v9USRLgk8Kiz.jpg?size=1024x1024&quality=95&type=album" class="d-block w-100" alt="...">
+                    </div>
+                    <div th:each="photo : ${appeal.getPhotoAppealList()}">
+                        <div class="carousel-item">
+                            <img th:src="@{${photo.getPath()}}" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

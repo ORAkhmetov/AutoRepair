@@ -3,19 +3,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Читатели</title>
+    <title>Ордера</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
-<div th:each="order : ${orders}">
-    <a th:href="@{/order/{id}(id=${order.getId()})}"
-       th:text="${order.getName() + ', ' + order.getValue()}">order</a>
+<div th:insert="~{common :: com}"></div>
+<div class="container-fluid">
+    <form th:method="GET" th:action="@{/orders/new}">
+        <button type="submit" class="btn btn-primary btn-lg" th:name="appeal_id" th:value="${appeal.getId()}">Добавить ордер</button>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Наименование работ</th>
+            <th scope="col">Стоимость работ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="order : ${orders}">
+            <tr>
+                <th scope="row" th:text="${order.getId()}">id</th>
+                <td>
+                    <a th:text="${order.getName()}">Name</a>
+                </td>
+                <td>
+                    <a th:text="${order.getValue() + ' руб.'}">Value</a>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
 </div>
-
-<br/>
-<hr/>
-
-<a href="/orders/new">Добавить человека</a>
-
 </body>
 </html>

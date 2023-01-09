@@ -6,7 +6,7 @@
   <title>Новое обращение</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
+<div th:insert="~{common :: com}"></div>
 <div class="container">
   <form th:method="POST" th:action="@{/appeals}" th:object="${appeal}">
     <div class="mb-3">

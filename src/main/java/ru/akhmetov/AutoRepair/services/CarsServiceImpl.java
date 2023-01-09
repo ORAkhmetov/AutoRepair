@@ -3,7 +3,6 @@ package ru.akhmetov.AutoRepair.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akhmetov.AutoRepair.models.Car;
-import ru.akhmetov.AutoRepair.models.CarCreator;
 import ru.akhmetov.AutoRepair.models.Client;
 import ru.akhmetov.AutoRepair.repositories.CarsRepository;
 
@@ -57,10 +56,5 @@ public class CarsServiceImpl implements CarsService {
     }
     public Optional<Car> getCarByStateNumber(String stateNumber) {
         return carsRepository.getCarByStateNumber(stateNumber);
-    }
-    public CarCreator requestCreateCarWithOwner(int owner_id) {
-        CarCreator carCreator = new CarCreator();
-        carCreator.createCar(clientsService.findOne(owner_id));
-        return carCreator;
     }
 }

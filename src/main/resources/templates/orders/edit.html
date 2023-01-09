@@ -3,22 +3,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Изменить читателя</title>
+    <title>Изменить ордер</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
-<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
-    <label for="fullName">Введите ФИО: </label>
-    <input type="text" th:field="*{fullName}" id="fullName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name Error</div>
-    <br/>
-    <label for="yearOfBirth">Введите год рождения: </label>
-    <input type="text" th:field="*{yearOfBirth}" id="yearOfBirth"/>
-    <div style="color:red" th:if="${#fields.hasErrors('yearOfBirth')}" th:errors="*{yearOfBirth}">Age Error</div>
-    <br/>
+<div th:insert="~{common :: com}"></div>
+<div class="container">
+    <form th:method="POST" th:action="@{/orders}" th:object="${order}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Описание работ</label>
+            <input type="text" class="form-control" placeholder="Введите тип произведенных работ" th:field="*{name}" id="name">
+            <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="orderType" class="form-label">Тип ордера</label>
+            <input type="text" class="form-control" placeholder="Описание неисправности" th:field="*{orderType}" id="orderType">
+            <div style="color:red" th:if="${#fields.hasErrors('orderType')}" th:errors="*{orderType}">Name Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="value" class="form-label">Сумма</label>
+            <input type="text" class="form-control" placeholder="Введите стоимость" th:field="*{value}" id="value">
+            <div style="color:red" th:if="${#fields.hasErrors('value')}" th:errors="*{value}">value</div>
+        </div>
 
-    <input type="submit" value="Редактировать!"/>
-</form>
+        <button type="submit" class="btn btn-primary btn-lg">Создать</button>
+    </form>
+</div>
 
 </body>
 </html>

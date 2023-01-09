@@ -70,7 +70,7 @@ public class OrdersController {
             ordersServiceImpl.enrichOrder(order, appealsService.findOne(appealCreatedOrder));
         appealCreatedOrder = 0;
         ordersServiceImpl.save(order);
-        return "redirect:/orders";
+        return "redirect:/cars";
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
