@@ -46,7 +46,7 @@ public class StartPageController {
         model.addAttribute("cars", carsServiceImpl.findAll().stream()
                 .map(carsMapper::convertToCarDTO).collect(Collectors.toList()));
 
-        model.addAttribute("cases", appealsServiceImpl.findAll().stream()
+        model.addAttribute("appeals", appealsServiceImpl.findAll().stream()
                 .map(appealsMapper::convertToAppealDTO).collect(Collectors.toList()));
         return "startPage";
     }

@@ -1,6 +1,7 @@
 package ru.akhmetov.AutoRepair.services;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akhmetov.AutoRepair.dto.ClientDTO;
@@ -23,6 +24,9 @@ public class ClientsServiceImpl implements ClientsService{
     }
     public List<Client> findAll() {
         return clientsRepository.findAll();
+    }
+    public List<Client> findWithPagination(Integer page) {
+        return clientsRepository.findAll(PageRequest.of(page, 10)).getContent();
     }
     public Client findOne(int id) {
         Optional<Client> foundedClient = clientsRepository.findById(id);
@@ -47,5 +51,8 @@ public class ClientsServiceImpl implements ClientsService{
 
     public Optional<Client> getClientByFullName(String fullName) {
         return clientsRepository.getClientByFullName(fullName);
+    }
+    public List<Client> getClientsByFullNameContainingIgnoreCase(String query) {
+        return clientsRepository.getClientByFullNameContainingIgnoreCase(query);
     }
 }

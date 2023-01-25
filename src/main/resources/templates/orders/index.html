@@ -6,33 +6,45 @@
     <title>Ордера</title>
 </head>
 <body>
+<link href="/tableInput.css" rel="stylesheet">
+
 <div th:insert="~{common :: com}"></div>
 <div class="container-fluid">
     <form th:method="GET" th:action="@{/orders/new}">
         <button type="submit" class="btn btn-primary btn-lg" th:name="appeal_id" th:value="${appeal.getId()}">Добавить ордер</button>
     </form>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">Наименование работ</th>
-            <th scope="col">Стоимость работ</th>
-        </tr>
-        </thead>
-        <tbody>
-        <div th:each="order : ${orders}">
+    <form th:method="PATCH" th:action="@{/appeals/{id}/orders(id=${appeal.getId()})}" th:object="${orders}">
+        <table class="table">
+            <thead>
             <tr>
-                <th scope="row" th:text="${order.getId()}">id</th>
-                <td>
-                    <a th:text="${order.getName()}">Name</a>
-                </td>
-                <td>
-                    <a th:text="${order.getValue() + ' руб.'}">Value</a>
-                </td>
+                <th scope="col">id</th>
+                <th scope="col">Наименование работ</th>
+                <th scope="col">Стоимость работ, руб</th>
             </tr>
-        </div>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <div th:each="order, i : ${orders}">
+                <tr>
+                    <th scope="row" th:text="${order.getId()}">id</th>
+                    <td>
+                        <!--/*@thymesVar id="order" type="ru.akhmetov.AutoRepair.dto.OrderDTO"*/-->
+                        <div th:object="${order}">
+                            <label for="name"></label>
+                            <input type="text" th:name="|orders[${i.index}].name|" id="name"
+                                   th:value="${order.getName()}"/>
+                        </div>
+                    </td>
+                    <td>
+                        <label for="value"></label>
+                        <input type="text" th:name="|orders[${i.index}].value|" id="value"
+                               th:value="${order.getValue()}"/>
+                    </td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary btn-lg">Сохранить изменения</button>
+    </form>
 </div>
 </body>
 </html>

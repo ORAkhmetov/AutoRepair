@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Фото ремонта</title>
+</head>
+<body>
+<div th:insert="~{common :: com}"></div>
+<div class="container">
+    <p th:text="${appeal.getName()}" style="font-size: xx-large">VALUE</p>
+    <p th:text="${'Модель: ' + appeal.getCar().getModel()}" style="font-size: x-large">VALUE</p>
+    <p th:text="${'Дата ремонта: ' + appeal.getDateOfAppeal()}" style="font-size: large">VALUE</p>
+    <div class="d-flex flex-wrap">
+        <div th:each="photo : ${appeal.getPhotoAppealList()}">
+            <img th:src="@{${photo.getPath()}}" class="img-thumbnail" alt="..." width="400">
+        </div>
+    </div>
+</div>
+</body>
+</html>

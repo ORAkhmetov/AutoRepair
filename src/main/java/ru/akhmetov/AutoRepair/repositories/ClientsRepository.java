@@ -14,4 +14,5 @@ import java.util.Optional;
 @Repository
 public interface ClientsRepository extends JpaRepository<Client, Integer> {
     Optional<Client> getClientByFullName(String fullName);
+    List<Client> getClientByFullNameContainingIgnoreCase(String query);
 }

@@ -18,6 +18,11 @@
             <p th:text="${'Описание неисправности: ' + appeal.getFaultDescription()}" style="font-size: large">VALUE</p>
             <div class="row row-cols-auto">
                 <div class="col">
+                    <form th:method="GET" th:action="@{/appeals/{id}/photos(id=${appeal.getId()})}">
+                        <button type="submit" class="btn btn-primary btn-lg">Фото</button>
+                    </form>
+                </div>
+                <div class="col">
                     <form th:method="GET" th:action="@{/appeals/{id}/orders(id=${appeal.getId()})}">
                         <button type="submit" class="btn btn-primary btn-lg">Ордера</button>
                     </form>

@@ -7,14 +7,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.dto.AppealDTO;
+import ru.akhmetov.AutoRepair.dto.OrderDTO;
 import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
 import ru.akhmetov.AutoRepair.mappers.OrdersMapper;
 import ru.akhmetov.AutoRepair.models.Appeal;
+import ru.akhmetov.AutoRepair.models.Order;
 import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
 import ru.akhmetov.AutoRepair.services.OrdersServiceImpl;
 import ru.akhmetov.AutoRepair.util.AppealValidator;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -110,5 +115,21 @@ public class AppealsController {
         model.addAttribute("orders", ordersService.getOrdersByAppeal(appeal).stream()
                 .map(ordersMapper::convertToOrderDTO).collect(Collectors.toList()));
         return "orders/index";
+    }
+    @GetMapping("/{id}/photos")
+    public String showPhotos(@PathVariable("id") int id, Model model) {
+        Appeal appeal = appealsServiceImpl.findOne(id);
+        model.addAttribute("appeal", appealsMapper.convertToAppealDTO(appeal));
+        return "appeals/showPhotos";
+    }
+    @PatchMapping("/{id}/orders")
+    public String changeOrders(@ModelAttribute("orders") @Valid LinkedList<OrderDTO> ordersDTOList, BindingResult bindingResult,
+                               @PathVariable("id") int id) {
+        Appeal appealWithUpdatedOrders = appealsServiceImpl.findOne(id);
+        appealWithUpdatedOrders.setOrderList(ordersDTOList.stream().map(ordersMapper::convertToOrder).collect(Collectors.toList()));
+        System.out.println(ordersDTOList.stream().map(ordersMapper::convertToOrder).collect(Collectors.toList()));
+        appealsServiceImpl.update(id, appealWithUpdatedOrders);
+        System.out.println("patch");
+        return "redirect:/appeals/{id}";
     }
 }

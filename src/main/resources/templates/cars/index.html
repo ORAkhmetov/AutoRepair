@@ -5,11 +5,25 @@
     <title>Машины</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
+<div th:insert="~{common :: com}"></div>
 <div class="container-fluid">
-    <form th:method="GET" th:action="@{/cars/new}">
-        <button type="submit" class="btn btn-primary btn-lg">Добавить новую машину</button>
-    </form>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <form th:method="GET" th:action="@{/cars/new}">
+                <button type="submit" class="btn btn-primary btn-lg">Добавить новую машину</button>
+            </form>
+        </div>
+        <div class="col">
+            <form th:method="GET" th:action="@{/search/forStateNumber}">
+                <button type="submit" class="btn btn-primary btn-lg">Поиск по номеру</button>
+            </form>
+        </div>
+        <div class="col">
+            <form th:method="GET" th:action="@{/search/forModel}">
+                <button type="submit" class="btn btn-primary btn-lg">Поиск по модели</button>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="card-group">
             <div th:each="car : ${cars}">

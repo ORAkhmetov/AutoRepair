@@ -6,7 +6,7 @@
     <title>Изменить обращение</title>
 </head>
 <body>
-<div th:insert="common :: com"></div>
+<div th:insert="~{common :: com}"></div>
 <form th:method="PATCH" th:action="@{/appeals/{id}(id=${appeal.getId()})}" th:object="${appeal}">
     <label for="name">Введите имя: </label>
     <input type="text" th:field="*{name}" id="name"/>

@@ -41,3 +41,4 @@ public class PhotoAppeal {
         this.appeal = appeal;
     }
 }
+

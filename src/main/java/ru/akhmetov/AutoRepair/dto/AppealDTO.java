@@ -2,6 +2,7 @@ package ru.akhmetov.AutoRepair.dto;
 
 import jakarta.validation.constraints.Min;
 import ru.akhmetov.AutoRepair.models.Car;
+import ru.akhmetov.AutoRepair.models.Order;
 import ru.akhmetov.AutoRepair.models.PhotoAppeal;
 
 import java.time.LocalDate;
@@ -25,6 +26,8 @@ public class AppealDTO {
     private int mileage;
 
     private LocalDate dateOfAppeal;
+
+    private List<Order> orderList;
 
     private List<PhotoAppeal> photoAppealList;
 
@@ -77,6 +80,14 @@ public class AppealDTO {
 
     public void setFaultDescription(String faultDescription) {
         this.faultDescription = faultDescription;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     public List<PhotoAppeal> getPhotoAppealList() {

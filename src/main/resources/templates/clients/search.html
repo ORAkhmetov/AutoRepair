@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Клиенты по поиску</title>
+</head>
+<body>
+<div th:insert="~{common :: com}"></div>
+<div class="container-fluid">
+  <div class="row row-cols-auto">
+    <form th:method="POST" th:action="@{/clients/search}">
+      <div class="container-fluid">
+        <div class="row row-cols-auto">
+          <div class="col">
+            <div class="mb-3">
+              <label for="searchQuery" class="form-label"></label>
+              <input type="text" class="form-control" placeholder="Введите поисковый запрос по имени клиента" id="searchQuery" name="searchQuery">
+            </div>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary btn-lg">Найти</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div th:if="${foundedClients}">
+    <div th:if="${foundedClients.isEmpty()}">
+      <p>Клиентов не найдено</p>
+    </div>
+    <div th:if="${!foundedClients.isEmpty()}">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Автомобили</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="client : ${foundedClients}">
+          <tr>
+            <th scope="row" th:text="${client.getId()}">n</th>
+            <td>
+              <a th:href="@{/clients/{id}(id=${client.getId()})}"
+                 th:text="${client.getFullName()}">AUser</a>
+            </td>
+            <td>
+              <div th:each="car : ${client.getCarList()}">
+                <a th:href="@{/cars/{id}(id=${car.getId()})}"
+                   th:text="${car.getModel()}">AUser</a>
+              </div>
+            </td>
+          </tr>
+        </div>
+        </tbody>
+      </table>
+    </div>
+<!--  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="/clients?page=0">1</a></li> &lt;!&ndash;TODO&ndash;&gt;
+      <li class="page-item"><a class="page-link" href="/clients?page=1">2</a></li>
+      <li class="page-item"><a class="page-link" href="/clients?page=2">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>-->
+</div>
+
+</body>
+</html>

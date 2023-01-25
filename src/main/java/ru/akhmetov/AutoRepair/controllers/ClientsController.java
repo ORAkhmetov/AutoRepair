@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/clients")
 public class ClientsController {
+
     private final ClientsServiceImpl clientsServiceImpl;
     private final CarsServiceImpl carsServiceImpl;
     private final AppealsServiceImpl appealsServiceImpl;
@@ -47,8 +48,9 @@ public class ClientsController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("clients", clientsServiceImpl.findAll().stream()
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page) {
+
+        model.addAttribute("clients", clientsServiceImpl.findWithPagination(page).stream()
                 .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
         return "clients/index";
     }
@@ -80,7 +82,7 @@ public class ClientsController {
             return "clients/new";
 
         clientsServiceImpl.save(client);
-        return "redirect:/clients";
+        return "redirect:/clients?page=0";
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
@@ -104,7 +106,15 @@ public class ClientsController {
         clientsServiceImpl.delete(id);
         return "redirect:/clients";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "clients/search";
+    }
 
-
-
+    @PostMapping("/search")
+    public String search(Model model, @RequestParam("searchQuery") String searchQuery) {
+        System.out.println(searchQuery);
+        model.addAttribute("foundedClients", clientsServiceImpl.getClientsByFullNameContainingIgnoreCase(searchQuery));
+        return "clients/search";
+    }
 }
