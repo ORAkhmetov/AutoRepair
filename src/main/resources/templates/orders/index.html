@@ -27,7 +27,7 @@
                 <tr>
                     <th scope="row" th:text="${order.getId()}">id</th>
                     <td>
-                        <!--/*@thymesVar id="order" type="ru.akhmetov.AutoRepair.dto.OrderDTO"*/-->
+                        <!--/*@thymesVar id="order" type="ru.akhmetov.AutoRepair.order.OrderDTO"*/-->
                         <div th:object="${order}">
                             <label for="name"></label>
                             <input type="text" th:name="|orders[${i.index}].name|" id="name"

@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.akhmetov.AutoRepair.mappers.CarsMapper;
-import ru.akhmetov.AutoRepair.mappers.AppealsMapper;
-import ru.akhmetov.AutoRepair.mappers.ClientsMapper;
-import ru.akhmetov.AutoRepair.services.CarsServiceImpl;
-import ru.akhmetov.AutoRepair.services.AppealsServiceImpl;
-import ru.akhmetov.AutoRepair.services.ClientsServiceImpl;
+import ru.akhmetov.AutoRepair.car.CarsMapper;
+import ru.akhmetov.AutoRepair.appeal.AppealsMapper;
+import ru.akhmetov.AutoRepair.client.ClientsMapper;
+import ru.akhmetov.AutoRepair.car.CarsServiceImpl;
+import ru.akhmetov.AutoRepair.appeal.AppealsServiceImpl;
+import ru.akhmetov.AutoRepair.client.ClientsServiceImpl;
 
 import java.util.stream.Collectors;
 

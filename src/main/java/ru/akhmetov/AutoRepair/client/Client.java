@@ -1,0 +1,59 @@
+package ru.akhmetov.AutoRepair.client;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import ru.akhmetov.AutoRepair.car.Car;
+import ru.akhmetov.AutoRepair.client.ClientDTO;
+
+import java.util.List;
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
+@Entity
+@Table(name = "client")
+public class Client {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "full_name")
+    @NotEmpty(message = "Имя не должно быть пустым")
+    private String fullName;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Car> carList;
+
+    public Client(ClientDTO clientDTO) {
+        this.fullName = clientDTO.getFullName();
+    }
+
+    public Client() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public List<Car> getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
+    }
+}

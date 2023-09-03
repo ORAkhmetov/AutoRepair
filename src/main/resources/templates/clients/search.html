@@ -7,14 +7,14 @@
 <body>
 <div th:insert="~{common :: com}"></div>
 <div class="container-fluid">
-  <div class="row row-cols-auto">
+<!--  <div class="row row-cols-auto">-->
     <form th:method="POST" th:action="@{/clients/search}">
       <div class="container-fluid">
-        <div class="row row-cols-auto">
+        <div class="row">
           <div class="col">
             <div class="mb-3">
               <label for="searchQuery" class="form-label"></label>
-              <input type="text" class="form-control" placeholder="Введите поисковый запрос по имени клиента" id="searchQuery" name="searchQuery">
+              <input type="text" class="form-control" placeholder="Введите в поисковый запрос любую часть полного имени клиента" id="searchQuery" name="searchQuery">
             </div>
           </div>
           <div class="col">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </form>
-  </div>
+<!--  </div>-->
   <div th:if="${foundedClients}">
     <div th:if="${foundedClients.isEmpty()}">
       <p>Клиентов не найдено</p>
