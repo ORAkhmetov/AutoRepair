@@ -97,6 +97,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>auto_repair</finalName>
 	</build>
 
 </project>
