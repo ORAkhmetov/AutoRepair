@@ -39,3 +39,15 @@ jobs:
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+
+          - name: SSH into VDS and deploy
+              uses: appleboy/ssh-action@v0.5.4
+              with:
+                host: ${{ secrets.VDS_HOST }}
+                username: ${{ secrets.VDS_USERNAME }}
+                password: ${{ secrets.VDS_PASSWORD }}
+                script: |
+                  docker pull akhmetovor/auto_repair:latest
+                  docker stop auto_repair_container || true
+                  docker rm auto_repair_container || true
+                  docker run -d --name auto_repair_container -p 8080:8080 akhmetovor/auto_repair:latest
