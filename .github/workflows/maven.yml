@@ -47,6 +47,6 @@ jobs:
         password: ${{ secrets.VDS_PASSWORD }}
         script: |
           git clone https://github.com/ORAkhmetov/AutoRepair.git
-          cd yourrepository
+          cd AutoRepair
           docker-compose pull
           docker-compose up -d
