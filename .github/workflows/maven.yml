@@ -49,4 +49,4 @@ jobs:
           docker pull akhmetovor/auto_repair:latest
           docker stop auto_repair_container || true
           docker rm auto_repair_container || true
-          docker run -d --name auto_repair_container -p 80:8080 akhmetovor/auto_repair:latest
+          docker run -d --name auto_repair_container --network auto_network -p 80:8080 akhmetovor/auto_repair:latest
