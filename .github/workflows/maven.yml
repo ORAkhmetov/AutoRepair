@@ -48,5 +48,5 @@ jobs:
         script: |
           git clone https://github.com/ORAkhmetov/AutoRepair.git
           cd AutoRepair
-          docker-compose pull
-          docker-compose up -d
+          docker compose pull
+          docker compose up -d
