@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  web:
+    image: akhmetovor/auto_repair:latest
+    ports:
+      - "80:8080"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: auto_db
+      POSTGRES_USER: oleg
+      POSTGRES_PASSWORD: XnBX#kE9
+    ports:
+      - "5432:5432"
