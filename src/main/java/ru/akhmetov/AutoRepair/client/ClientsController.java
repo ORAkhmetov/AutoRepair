@@ -44,10 +44,15 @@ public class ClientsController {
 
     @GetMapping()
     public String index(Model model, @RequestParam(value = "page", required = false) Integer page) {
-
-        model.addAttribute("clients", clientsServiceImpl.findWithPagination(page).stream()
-                .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
-        return "clients/index";
+        if (page == null) {
+            model.addAttribute("clients", clientsServiceImpl.findAll().stream()
+                    .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
+            return "clients/index";
+        } else {
+            model.addAttribute("clients", clientsServiceImpl.findWithPagination(page).stream()
+                    .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
+            return "clients/index";
+        }
     }
 
     @GetMapping("/{id}")

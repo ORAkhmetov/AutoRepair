@@ -88,7 +88,10 @@
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    </form>
+    <br/>
+    <form th:method="GET" th:action="@{/auth/registration}">
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Регистрация</button>
     </form>
 </main>
 <!--<form name="f" method="post" action="/process_login">
