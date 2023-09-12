@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author Oleg Akhmetov on 26.12.2022
  */
+//Изменение 2
 @Controller
 @RequestMapping("/cars")
 public class CarsController {
