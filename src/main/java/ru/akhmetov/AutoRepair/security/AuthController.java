@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author Oleg Akhmetov on 28.12.2022
  */
-//Изменение в старой ветке, которые мы внесли в неактуальном проекте
+//Изменение в старой ветке, которые мы внесли в неактуальном проекте 23123
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
