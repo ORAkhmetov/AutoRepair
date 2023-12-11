@@ -9,7 +9,7 @@ services:
       - db
 
   db:
-    image: postgres:latest
+    image: postgres:15.5
     environment:
       POSTGRES_DB: auto_db
       POSTGRES_USER: oleg

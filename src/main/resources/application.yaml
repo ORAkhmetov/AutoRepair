@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://autorepair-db-1:5432/auto_db
+    username: oleg
+    password: XnBX#kE9
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  freemarker:
+    expose-request-attributes: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+application:
+  upload:
+    path: C:/Data/img/
