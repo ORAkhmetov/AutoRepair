@@ -45,13 +45,11 @@ jobs:
         host: ${{ secrets.VDS_HOST }}
         username: ${{ secrets.VDS_USERNAME }}
         password: ${{ secrets.VDS_PASSWORD }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.CICD_TOKEN }}
-      script: |
-        git clone https://github.com/ORAkhmetov/AutoRepair.git
-        cd AutoRepair
-        docker compose pull
-        docker compose up -d
+        script: |
+          git clone https://${{ secrets.CICD_TOKEN }}:x-oauth-basic@github.com/ORAkhmetov/AutoRepair.git
+          cd AutoRepair
+          docker compose pull
+          docker compose up -d
 
     - name: Clean up Docker resources
       run: |
