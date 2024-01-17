@@ -1,23 +1,19 @@
 package ru.akhmetov.AutoRepair.order;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akhmetov.AutoRepair.appeal.Appeal;
 
 import java.util.List;
 import java.util.Optional;
-
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
+/**  Реализацию интерфейса "OrdersService"  **/
 @Service
+@AllArgsConstructor
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
 public class OrdersServiceImpl implements OrdersService {
     private final OrdersRepository ordersRepository;
 
-    public OrdersServiceImpl(OrdersRepository ordersRepository) {
-        this.ordersRepository = ordersRepository;
-    }
     public List<Order> findAll() {
         return ordersRepository.findAll();
     }

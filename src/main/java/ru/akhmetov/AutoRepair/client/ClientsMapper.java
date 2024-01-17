@@ -1,18 +1,14 @@
 package ru.akhmetov.AutoRepair.client;
 
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+/**  Преобразование объектов между сущностью "Client" и  "DTO"  **/
 
-/**
- * @author Oleg Akhmetov on 27.12.2022
- */
 @Component
+@AllArgsConstructor
 public class ClientsMapper {
     private final ModelMapper modelMapper;
-
-    public ClientsMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
 
     public ClientDTO convertToClientDTO(Client client) {
         return modelMapper.map(client, ClientDTO.class);

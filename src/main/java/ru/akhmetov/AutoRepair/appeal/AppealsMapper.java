@@ -1,18 +1,16 @@
 package ru.akhmetov.AutoRepair.appeal;
 
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+/**  Преобразование объектов между сущностью "Appeals" и  "DTO"  **/
 
-/**
- * @author Oleg Akhmetov on 27.12.2022
- */
 @Component
+@AllArgsConstructor
 public class AppealsMapper {
     private final ModelMapper modelMapper;
 
-    public AppealsMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
+
     public AppealDTO convertToAppealDTO(Appeal appeal) {
         return modelMapper.map(appeal, AppealDTO.class);
     }

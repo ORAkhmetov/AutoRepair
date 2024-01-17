@@ -1,5 +1,6 @@
 package ru.akhmetov.AutoRepair.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +11,12 @@ import ru.akhmetov.AutoRepair.client.ClientsMapper;
 import ru.akhmetov.AutoRepair.car.CarsServiceImpl;
 import ru.akhmetov.AutoRepair.appeal.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.client.ClientsServiceImpl;
-
 import java.util.stream.Collectors;
 
-/**
- * @author Oleg Akhmetov on 29.12.2022
- */
+
+/** Контроллер стартовой страницы **/
 @Controller
+@AllArgsConstructor
 @RequestMapping("/startPage")
 public class StartPageController {
 
@@ -27,16 +27,6 @@ public class StartPageController {
     private final ClientsMapper clientsMapper;
     private final AppealsMapper appealsMapper;
 
-    public StartPageController(ClientsServiceImpl clientsServiceImpl, CarsServiceImpl carsServiceImpl,
-                               AppealsServiceImpl appealsServiceImpl, CarsMapper carsMapper, ClientsMapper clientsMapper,
-                               AppealsMapper appealsMapper) {
-        this.clientsServiceImpl = clientsServiceImpl;
-        this.carsServiceImpl = carsServiceImpl;
-        this.appealsServiceImpl = appealsServiceImpl;
-        this.carsMapper = carsMapper;
-        this.clientsMapper = clientsMapper;
-        this.appealsMapper = appealsMapper;
-    }
 
     @GetMapping()
     public String index(Model model) {

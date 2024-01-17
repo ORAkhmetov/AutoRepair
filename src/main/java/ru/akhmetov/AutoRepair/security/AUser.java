@@ -3,10 +3,8 @@ package ru.akhmetov.AutoRepair.security;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+/** Сущность для работы с таблицей "auser" **/
 
-/**
- * @author Oleg Akhmetov on 28.12.2022
- */
 @Entity
 @Table(name = "auser")
 public class AUser {

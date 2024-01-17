@@ -1,9 +1,13 @@
 package ru.akhmetov.AutoRepair.appeal;
 
 import jakarta.persistence.*;
-import ru.akhmetov.AutoRepair.appeal.Appeal;
+import lombok.Getter;
+import lombok.Setter;
+/**  Cущность для хранения информации о фотографиях, связанных с обращениями  **/
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Photo")
 public class PhotoAppeal {
     @Id
@@ -18,28 +22,5 @@ public class PhotoAppeal {
     @JoinColumn(name = "appeal_id", referencedColumnName = "id")
     private Appeal appeal;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public Appeal getAppeal() {
-        return appeal;
-    }
-
-    public void setAppeal(Appeal appeal) {
-        this.appeal = appeal;
-    }
 }
 

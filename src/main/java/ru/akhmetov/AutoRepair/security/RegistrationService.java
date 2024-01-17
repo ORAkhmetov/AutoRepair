@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
+/**  Обработка регестрации пользователя  **/
 
-/**
- * @author Oleg Akhmetov on 28.12.2022
- */
 @Service
 public class RegistrationService {
     private final AUsersRepository aUsersRepository;

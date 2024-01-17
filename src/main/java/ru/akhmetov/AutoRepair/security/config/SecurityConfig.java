@@ -11,9 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.akhmetov.AutoRepair.security.AUserDetailsService;
 
-/**
- * @author Oleg Akhmetov on 28.12.2022
- */
 //@EnableWebSecurity
 @Configuration
 //@EnableWebSecurity

@@ -2,17 +2,20 @@ package ru.akhmetov.AutoRepair.appeal;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.akhmetov.AutoRepair.car.Car;
 import ru.akhmetov.AutoRepair.order.Order;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+/** Сущность для работы с таблицей "appeal" **/
 
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "appeal")
 public class Appeal {
 
@@ -49,73 +52,5 @@ public class Appeal {
         this.mileage = mileage;
         this.dateOfAppeal = dateOfAppeal;
         this.orderList = new ArrayList<>();
-    }
-
-    public Appeal() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public int getMileage() {
-        return mileage;
-    }
-
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
-    }
-
-    public LocalDate getDateOfAppeal() {
-        return dateOfAppeal;
-    }
-
-    public void setDateOfAppeal(LocalDate dateOfCase) {
-        this.dateOfAppeal = dateOfCase;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFaultDescription() {
-        return faultDescription;
-    }
-
-    public void setFaultDescription(String faultDescription) {
-        this.faultDescription = faultDescription;
-    }
-
-    public List<PhotoAppeal> getPhotoAppealList() {
-        return photoAppealList;
-    }
-
-    public void setPhotoAppealList(List<PhotoAppeal> photoAppealList) {
-        this.photoAppealList = photoAppealList;
     }
 }

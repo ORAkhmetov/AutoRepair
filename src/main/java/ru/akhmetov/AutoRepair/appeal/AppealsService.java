@@ -2,13 +2,10 @@ package ru.akhmetov.AutoRepair.appeal;
 
 import ru.akhmetov.AutoRepair.car.Car;
 import ru.akhmetov.AutoRepair.client.Client;
-
 import java.time.LocalDate;
 import java.util.List;
+/**  Предоставляет базовые методы для управления заказами  **/
 
-/**
- * @author Oleg Akhmetov on 27.12.2022
- */
 public interface AppealsService {
     List<Appeal> findAll();
     Appeal findOne(int id);

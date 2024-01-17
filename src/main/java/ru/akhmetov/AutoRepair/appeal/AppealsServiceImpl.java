@@ -1,25 +1,21 @@
 package ru.akhmetov.AutoRepair.appeal;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akhmetov.AutoRepair.car.Car;
 import ru.akhmetov.AutoRepair.client.Client;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+/**  Реализацию интерфейса "AppealsService"  **/
 
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
 @Service
+@AllArgsConstructor
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
 public class AppealsServiceImpl implements AppealsService {
     private final AppealsRepository appealsRepository;
 
-    public AppealsServiceImpl(AppealsRepository appealsRepository) {
-        this.appealsRepository = appealsRepository;
-    }
     public List<Appeal> findAll() {
         return appealsRepository.findAll();
     }

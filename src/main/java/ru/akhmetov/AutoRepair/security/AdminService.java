@@ -2,10 +2,8 @@ package ru.akhmetov.AutoRepair.security;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+/**  Сообщение, гласящее только админ?!  **/
 
-/**
- * @author Oleg Akhmetov on 28.12.2022
- */
 @Service
 public class AdminService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
