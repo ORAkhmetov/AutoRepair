@@ -3,6 +3,6 @@ CREATE TABLE Car (
                      model varchar(100) NOT NULL,
                      state_number varchar(10) NOT NULL UNIQUE,
                      vin varchar(40) NOT NULL UNIQUE,
-                     client_id int REFERENCES Client(id) ON DELETE SET NULL,
+                     client_id bigint REFERENCES Client(id) ON DELETE SET NULL,
                      filename varchar
 );
