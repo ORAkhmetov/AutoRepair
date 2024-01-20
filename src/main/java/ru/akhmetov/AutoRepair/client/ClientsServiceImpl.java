@@ -1,6 +1,6 @@
 package ru.akhmetov.AutoRepair.client;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 /**  Реализацию интерфейса "ClientService"  **/
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
 public class ClientsServiceImpl implements ClientsService{
     private final ClientsRepository clientsRepository;

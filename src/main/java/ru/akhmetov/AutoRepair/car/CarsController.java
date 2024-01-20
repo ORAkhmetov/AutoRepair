@@ -1,19 +1,19 @@
 package ru.akhmetov.AutoRepair.car;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhmetov.AutoRepair.appeal.AppealsMapper;
-import ru.akhmetov.AutoRepair.appeal.AppealsServiceImpl;
-import ru.akhmetov.AutoRepair.client.ClientsServiceImpl;
+import ru.akhmetov.AutoRepair.appeal.AppealsService;
+import ru.akhmetov.AutoRepair.client.ClientsService;
 import java.io.IOException;
 import java.util.stream.Collectors;
 /**  Контроллер, обрабатывающий запросы, связанные с машинами  **/
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/cars")
 @Controller
 public class CarsController {
@@ -24,8 +24,8 @@ public class CarsController {
     private final CarValidator carValidator;
     private final CarsMapper carsMapper;
     private final AppealsMapper appealsMapper;
-    private final AppealsServiceImpl appealsService;
-    private final ClientsServiceImpl clientsService;
+    private final AppealsService appealsService;
+    private final ClientsService clientsService;
 
     @GetMapping()
     public String index(Model model) {

@@ -1,6 +1,6 @@
 package ru.akhmetov.AutoRepair.car;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -8,10 +8,10 @@ import java.util.Optional;
 /**  Валидация  **/
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarValidator implements Validator {
 
-    private final CarsServiceImpl carsService;
+    private final CarsService carsService;
 
 
     @Override

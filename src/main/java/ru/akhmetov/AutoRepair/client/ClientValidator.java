@@ -1,6 +1,6 @@
 package ru.akhmetov.AutoRepair.client;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -9,7 +9,7 @@ import java.util.Optional;
 /**  Валидация  **/
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientValidator implements Validator {
     private final ClientsService clientsService;
 

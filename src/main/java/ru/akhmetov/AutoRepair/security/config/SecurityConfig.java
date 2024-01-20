@@ -1,6 +1,6 @@
 package ru.akhmetov.AutoRepair.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,18 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.akhmetov.AutoRepair.security.AUserDetailsService;
 
+/**  Конфиг Spring Security  **/
 //@EnableWebSecurity
 @Configuration
 //@EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final AUserDetailsService aUserDetailsService;
-
-    @Autowired
-    public SecurityConfig(AUserDetailsService aUserDetailsService) {
-        this.aUserDetailsService = aUserDetailsService;
-    }
-
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

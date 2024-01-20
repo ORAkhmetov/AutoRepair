@@ -1,6 +1,6 @@
 package ru.akhmetov.AutoRepair.car;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akhmetov.AutoRepair.client.Client;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 /**  Реализацию интерфейса "CarsService"  **/
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
 public class CarsServiceImpl implements CarsService {
     private final CarsRepository carsRepository;

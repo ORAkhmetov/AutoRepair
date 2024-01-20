@@ -1,12 +1,12 @@
 package ru.akhmetov.AutoRepair.car;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 /**  Преобразование объектов между сущностью "Car" и  "DTO"  **/
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarsMapper {
     private final ModelMapper modelMapper;
 
