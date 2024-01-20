@@ -1,14 +1,14 @@
 package ru.akhmetov.AutoRepair.client;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.akhmetov.AutoRepair.appeal.AppealsService;
 import ru.akhmetov.AutoRepair.car.CarsMapper;
 import ru.akhmetov.AutoRepair.appeal.AppealsMapper;
-import ru.akhmetov.AutoRepair.appeal.AppealsServiceImpl;
 import ru.akhmetov.AutoRepair.car.CarsService;
 
 import java.util.stream.Collectors;
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 //Изменение 1
 @Controller
 @RequestMapping("/clients")
-@AllArgsConstructor
+@RequiredArgsConstructor
 
 public class ClientsController {
 
     private final ClientsService clientsService;
     private final CarsService carsService;
-    private final AppealsServiceImpl appealsServiceImpl;
+    private final AppealsService appealsService;
     private final ClientValidator clientValidator;
     private final CarsMapper carsMapper;
     private final ClientsMapper clientsMapper;
@@ -50,7 +50,7 @@ public class ClientsController {
         model.addAttribute("cars", carsService.getCarsByClient(client).stream()
                 .map(carsMapper::convertToCarDTO).collect(Collectors.toList()));
 
-        model.addAttribute("appeal", appealsServiceImpl.getAppealsByClient(client).stream()
+        model.addAttribute("appeal", appealsService.getAppealsByClient(client).stream()
                 .map(appealsMapper::convertToAppealDTO).collect(Collectors.toList()));
 
         return "clients/show";

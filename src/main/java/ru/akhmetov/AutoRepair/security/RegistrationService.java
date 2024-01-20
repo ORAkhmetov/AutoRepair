@@ -1,22 +1,18 @@
 package ru.akhmetov.AutoRepair.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 /**  Обработка регестрации пользователя  **/
 
+@RequiredArgsConstructor
 @Service
 public class RegistrationService {
     private final AUsersRepository aUsersRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public RegistrationService(AUsersRepository aUsersRepository, PasswordEncoder passwordEncoder) {
-        this.aUsersRepository = aUsersRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
     @Transactional
     public void register(AUser aUser) {
         aUser.setPassword(passwordEncoder.encode(aUser.getPassword()));

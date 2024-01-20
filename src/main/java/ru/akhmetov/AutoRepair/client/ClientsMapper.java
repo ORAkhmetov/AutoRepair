@@ -1,12 +1,12 @@
 package ru.akhmetov.AutoRepair.client;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 /**  Преобразование объектов между сущностью "Client" и  "DTO"  **/
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientsMapper {
     private final ModelMapper modelMapper;
 

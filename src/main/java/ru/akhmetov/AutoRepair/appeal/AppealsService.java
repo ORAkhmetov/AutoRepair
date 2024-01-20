@@ -17,4 +17,5 @@ public interface AppealsService {
         appeal.setDateOfAppeal(LocalDate.now());
         appeal.setCar(car);
     }
+    List<Appeal> getAppealsByCar(Car car);
 }

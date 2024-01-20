@@ -2,6 +2,8 @@ package ru.akhmetov.AutoRepair.car;
 
 import ru.akhmetov.AutoRepair.client.Client;
 import java.util.List;
+import java.util.Optional;
+
 /**  Предоставляет базовые методы для управления заказами  **/
 public interface CarsService {
 
@@ -19,5 +21,6 @@ public interface CarsService {
 
     List<Car> getCarsByStateNumber(String query);
 
-
+    Optional<Car> getCarByVin(String vin);
+    Optional<Car> getCarByStateNumber(String stateNumber);
 }

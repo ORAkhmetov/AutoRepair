@@ -1,31 +1,31 @@
 package ru.akhmetov.AutoRepair.appeal;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.akhmetov.AutoRepair.car.CarsService;
 import ru.akhmetov.AutoRepair.order.OrderDTO;
 import ru.akhmetov.AutoRepair.order.OrdersMapper;
-import ru.akhmetov.AutoRepair.car.CarsServiceImpl;
-import ru.akhmetov.AutoRepair.order.OrdersServiceImpl;
+import ru.akhmetov.AutoRepair.order.OrdersService;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 /**  Контроллер, обрабатывающий запросы, связанные с обращениями клиентов  **/
 
 @Controller
 @RequestMapping("/appeals")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AppealsController {
     private static int carCreatedAppeal;
 
     private final AppealsService appealsService;
     private final AppealValidator appealValidator;
     private final AppealsMapper appealsMapper;
-    private final OrdersServiceImpl ordersService;
+    private final OrdersService ordersService;
     private final OrdersMapper ordersMapper;
-    private final CarsServiceImpl carsService;
+    private final CarsService carsService;
 
     @GetMapping()
     public String index(Model model) {

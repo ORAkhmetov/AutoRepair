@@ -14,4 +14,5 @@ public interface OrdersService {
     default void enrichOrder(Order order, Appeal appeal) {
         order.setAppeal(appeal);
     }
+    List<Order> getOrdersByAppeal (Appeal appeal);
 }
