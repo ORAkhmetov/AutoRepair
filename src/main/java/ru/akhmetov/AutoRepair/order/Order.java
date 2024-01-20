@@ -2,12 +2,15 @@ package ru.akhmetov.AutoRepair.order;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.akhmetov.AutoRepair.appeal.Appeal;
-
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
+/** Сущность для работы с таблицей "aorder" **/
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "aorder")
 public class Order {
     @Id
@@ -32,49 +35,5 @@ public class Order {
     public Order(int value, OrderType orderType) {
         this.value = value;
         this.orderType = orderType;
-    }
-
-    public Order() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public OrderType getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(OrderType orderType) {
-        this.orderType = orderType;
-    }
-
-    public Appeal getAppeal() {
-        return appeal;
-    }
-
-    public void setAppeal(Appeal appeal) {
-        this.appeal = appeal;
     }
 }

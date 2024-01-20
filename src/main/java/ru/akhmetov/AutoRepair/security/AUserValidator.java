@@ -1,23 +1,16 @@
 package ru.akhmetov.AutoRepair.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import java.util.Optional;
+/**  Валидация  **/
 
-/**
- * @author Oleg Akhmetov on 28.12.2022
- */
 @Component
+@RequiredArgsConstructor
 public class AUserValidator implements Validator {
     private final RegistrationService registrationService;
-
-    @Autowired
-    public AUserValidator(RegistrationService registrationService) {
-        this.registrationService = registrationService;
-    }
 
     @Override
     public boolean supports(Class<?> clazz) {

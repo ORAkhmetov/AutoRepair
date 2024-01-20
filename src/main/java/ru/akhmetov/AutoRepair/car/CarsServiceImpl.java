@@ -1,26 +1,20 @@
 package ru.akhmetov.AutoRepair.car;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.akhmetov.AutoRepair.client.Client;
-import ru.akhmetov.AutoRepair.client.ClientsServiceImpl;
-
 import java.util.List;
 import java.util.Optional;
-
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
+/**  Реализацию интерфейса "CarsService"  **/
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
 public class CarsServiceImpl implements CarsService {
     private final CarsRepository carsRepository;
-    private final ClientsServiceImpl clientsService;
 
-    public CarsServiceImpl(CarsRepository carsRepository, ClientsServiceImpl clientsService) {
-        this.carsRepository = carsRepository;
-        this.clientsService = clientsService;
-    }
+
+
     public List<Car> findAll() {
         return carsRepository.findAll();
     }
@@ -56,10 +50,10 @@ public class CarsServiceImpl implements CarsService {
     public Optional<Car> getCarByStateNumber(String stateNumber) {
         return carsRepository.getCarByStateNumber(stateNumber);
     }
-    public List<Car> getCarsByModelContainingIgnoreCase(String query) {
+    public List<Car> getCarsByModel(String query) {
         return carsRepository.getCarByModelContainingIgnoreCase(query);
     }
-    public List<Car> getCarsByStateNumberContainingIgnoreCase(String query) {
+    public List<Car> getCarsByStateNumber (String query){
         return carsRepository.getCarByStateNumberContainingIgnoreCase(query);
     }
 }

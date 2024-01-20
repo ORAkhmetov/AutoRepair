@@ -1,13 +1,17 @@
 package ru.akhmetov.AutoRepair.client;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.akhmetov.AutoRepair.car.Car;
 
 import java.util.List;
+/**  Объект передачи данных (DTO - Data Transfer Object) для сущности "Client"  **/
 
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
+@Getter
+@Setter
+@NoArgsConstructor
 public class ClientDTO {
 
     private int id;
@@ -20,30 +24,4 @@ public class ClientDTO {
         this.fullName = client.getFullName();
     }
 
-    public ClientDTO() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public List<Car> getCarList() {
-        return carList;
-    }
-
-    public void setCarList(List<Car> carList) {
-        this.carList = carList;
-    }
 }

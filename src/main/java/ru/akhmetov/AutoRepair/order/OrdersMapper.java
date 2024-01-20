@@ -1,18 +1,14 @@
 package ru.akhmetov.AutoRepair.order;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
-/**
- * @author Oleg Akhmetov on 27.12.2022
- */
+/**  Преобразование объектов между сущностью "Order" и  "DTO"  **/
 @Component
+@RequiredArgsConstructor
 public class OrdersMapper {
     private final ModelMapper modelMapper;
 
-    public OrdersMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
     public OrderDTO convertToOrderDTO(Order order) {
         return modelMapper.map(order, OrderDTO.class);
     }
