@@ -1,23 +1,19 @@
 package ru.akhmetov.AutoRepair.client;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
-/**
- * @author Oleg Akhmetov on 26.12.2022
- */
+/**  Реализацию интерфейса "ClientService"  **/
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true) //Все методы readOnly, если не помечены аналогичной аннотацией
 public class ClientsServiceImpl implements ClientsService{
     private final ClientsRepository clientsRepository;
 
-    public ClientsServiceImpl(ClientsRepository clientsRepository) {
-        this.clientsRepository = clientsRepository;
-    }
     public List<Client> findAll() {
         return clientsRepository.findAll();
     }
@@ -48,7 +44,7 @@ public class ClientsServiceImpl implements ClientsService{
     public Optional<Client> getClientByFullName(String fullName) {
         return clientsRepository.getClientByFullName(fullName);
     }
-    public List<Client> getClientsByFullNameContainingIgnoreCase(String query) {
+    public List<Client> getClientsByFullName(String query) {
         return clientsRepository.getClientByFullNameContainingIgnoreCase(query);
     }
 }
