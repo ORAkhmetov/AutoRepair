@@ -46,7 +46,11 @@ jobs:
         username: ${{ secrets.VDS_USERNAME }}
         password: ${{ secrets.VDS_PASSWORD }}
         script: |
-          git clone https://github.com/ORAkhmetov/AutoRepair.git
+          git clone https://${{ secrets.CICD_TOKEN }}:x-oauth-basic@github.com/ORAkhmetov/AutoRepair.git
           cd AutoRepair
           docker compose pull
           docker compose up -d
+
+    - name: Clean up Docker resources
+      run: |
+        docker system prune -af
