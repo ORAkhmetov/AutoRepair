@@ -2,17 +2,15 @@ package ru.akhmetov.AutoRepair.client;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.akhmetov.AutoRepair.car.Car;
+import ru.akhmetov.AutoRepair.client.ClientDTO;
 
 import java.util.List;
-/** Сущность для работы с таблицей "client" **/
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "client")
 public class Client {
     @Id
@@ -31,5 +29,31 @@ public class Client {
         this.fullName = clientDTO.getFullName();
     }
 
+    public Client() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public List<Car> getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
+    }
 }

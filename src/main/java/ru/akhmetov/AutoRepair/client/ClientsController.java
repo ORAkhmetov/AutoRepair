@@ -1,42 +1,56 @@
 package ru.akhmetov.AutoRepair.client;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.akhmetov.AutoRepair.appeal.AppealsService;
 import ru.akhmetov.AutoRepair.car.CarsMapper;
 import ru.akhmetov.AutoRepair.appeal.AppealsMapper;
-import ru.akhmetov.AutoRepair.car.CarsService;
+import ru.akhmetov.AutoRepair.car.CarsServiceImpl;
+import ru.akhmetov.AutoRepair.appeal.AppealsServiceImpl;
 
 import java.util.stream.Collectors;
-/**  Контроллер, обрабатывающий запросы, связанные с клиентами  **/
 
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 //Изменение 1
 @Controller
 @RequestMapping("/clients")
-@RequiredArgsConstructor
-
 public class ClientsController {
 
-    private final ClientsService clientsService;
-    private final CarsService carsService;
-    private final AppealsService appealsService;
+    private final ClientsServiceImpl clientsServiceImpl;
+    private final CarsServiceImpl carsServiceImpl;
+    private final AppealsServiceImpl appealsServiceImpl;
     private final ClientValidator clientValidator;
     private final CarsMapper carsMapper;
     private final ClientsMapper clientsMapper;
     private final AppealsMapper appealsMapper;
 
+    @Autowired
+    public ClientsController(ClientsServiceImpl clientsServiceImpl, CarsServiceImpl carsServiceImpl,
+                             AppealsServiceImpl appealsServiceImpl, ClientValidator clientValidator, CarsMapper carsMapper,
+                             ClientsMapper clientsMapper, AppealsMapper appealsMapper) {
+        this.clientsServiceImpl = clientsServiceImpl;
+        this.carsServiceImpl = carsServiceImpl;
+        this.appealsServiceImpl = appealsServiceImpl;
+        this.clientValidator = clientValidator;
+        this.carsMapper = carsMapper;
+        this.clientsMapper = clientsMapper;
+        this.appealsMapper = appealsMapper;
+    }
+
     @GetMapping()
     public String index(Model model, @RequestParam(value = "page", required = false) Integer page) {
         if (page == null) {
-            model.addAttribute("clients", clientsService.findAll().stream()
+            model.addAttribute("clients", clientsServiceImpl.findAll().stream()
                     .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
             return "clients/index";
         } else {
-            model.addAttribute("clients", clientsService.findWithPagination(page).stream()
+            model.addAttribute("clients", clientsServiceImpl.findWithPagination(page).stream()
                     .map(clientsMapper::convertToClientDTO).collect(Collectors.toList()));
             return "clients/index";
         }
@@ -44,13 +58,13 @@ public class ClientsController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        Client client = clientsService.findOne(id);
+        Client client = clientsServiceImpl.findOne(id);
         model.addAttribute("client", clientsMapper.convertToClientDTO(client));
 
-        model.addAttribute("cars", carsService.getCarsByClient(client).stream()
+        model.addAttribute("cars", carsServiceImpl.getCarsByClient(client).stream()
                 .map(carsMapper::convertToCarDTO).collect(Collectors.toList()));
 
-        model.addAttribute("appeal", appealsService.getAppealsByClient(client).stream()
+        model.addAttribute("appeal", appealsServiceImpl.getAppealsByClient(client).stream()
                 .map(appealsMapper::convertToAppealDTO).collect(Collectors.toList()));
 
         return "clients/show";
@@ -68,12 +82,12 @@ public class ClientsController {
         if (bindingResult.hasErrors())
             return "clients/new";
 
-        clientsService.save(client);
+        clientsServiceImpl.save(client);
         return "redirect:/clients?page=0";
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("client", clientsMapper.convertToClientDTO(clientsService.findOne(id)));
+        model.addAttribute("client", clientsMapper.convertToClientDTO(clientsServiceImpl.findOne(id)));
         return "clients/edit";
     }
     @PatchMapping("/{id}")
@@ -84,13 +98,13 @@ public class ClientsController {
         if (bindingResult.hasErrors())
             return "clients/edit";
 
-        clientsService.update(id, client);
+        clientsServiceImpl.update(id, client);
         return "redirect:/clients?page=0";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        clientsService.delete(id);
+        clientsServiceImpl.delete(id);
         return "redirect:/clients";
     }
     @GetMapping("/search")
@@ -101,7 +115,7 @@ public class ClientsController {
     @PostMapping("/search")
     public String search(Model model, @RequestParam("searchQuery") String searchQuery) {
         System.out.println(searchQuery);
-        model.addAttribute("foundedClients", clientsService.getClientsByFullName(searchQuery));
+        model.addAttribute("foundedClients", clientsServiceImpl.getClientsByFullNameContainingIgnoreCase(searchQuery));
         return "clients/search";
     }
 }

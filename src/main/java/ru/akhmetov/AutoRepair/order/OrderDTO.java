@@ -1,13 +1,10 @@
 package ru.akhmetov.AutoRepair.order;
 
 import jakarta.validation.constraints.Min;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-/**  Объект передачи данных (DTO - Data Transfer Object) для сущности "Order" **/
-@Getter
-@Setter
-@NoArgsConstructor
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 public class OrderDTO {
 
     private int id;
@@ -18,4 +15,38 @@ public class OrderDTO {
 
     private OrderType orderType;
 
+    public OrderDTO() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
 }

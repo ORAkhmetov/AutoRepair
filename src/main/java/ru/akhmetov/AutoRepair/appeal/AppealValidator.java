@@ -1,17 +1,21 @@
 package ru.akhmetov.AutoRepair.appeal;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-/**  Валидация  **/
 
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Component
-@RequiredArgsConstructor
 public class AppealValidator implements Validator {
     private final AppealsServiceImpl casesService;
 
-
+    @Autowired
+    public AppealValidator(AppealsServiceImpl casesService) {
+        this.casesService = casesService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -20,6 +24,7 @@ public class AppealValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+
 
     }
 }

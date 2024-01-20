@@ -3,19 +3,12 @@ package ru.akhmetov.AutoRepair.security;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
-/** Сущность для работы с таблицей "auser" **/
-
+/**
+ * @author Oleg Akhmetov on 28.12.2022
+ */
 @Entity
 @Table(name = "auser")
-@Setter
-@Getter
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class AUser {
 
     @Id
@@ -33,4 +26,45 @@ public class AUser {
 
     @Column(name = "role")
     private String role;
+
+    public AUser() {
+    }
+
+    public AUser(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

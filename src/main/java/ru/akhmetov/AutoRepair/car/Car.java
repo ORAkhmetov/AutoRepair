@@ -2,18 +2,15 @@ package ru.akhmetov.AutoRepair.car;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.akhmetov.AutoRepair.appeal.Appeal;
 import ru.akhmetov.AutoRepair.client.Client;
-import java.util.List;
-/** Сущность для работы с таблицей "car" **/
 
+import java.util.List;
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 @Table(name = "car")
 public class Car {
 
@@ -52,5 +49,66 @@ public class Car {
 
     public Car(Client owner) {
         this.owner = owner;
+    }
+
+    public Car() {
+
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getStateNumber() {
+        return stateNumber;
+    }
+
+    public void setStateNumber(String stateNumber) {
+        this.stateNumber = stateNumber;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
+
+    public Client getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Client owner) {
+        this.owner = owner;
+    }
+
+    public List<Appeal> getAppealList() {
+        return appealList;
+    }
+
+    public void setAppealList(List<Appeal> appealList) {
+        this.appealList = appealList;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

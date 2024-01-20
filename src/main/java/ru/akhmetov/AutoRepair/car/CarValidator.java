@@ -1,18 +1,24 @@
 package ru.akhmetov.AutoRepair.car;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import java.util.Optional;
-/**  Валидация  **/
 
+import java.util.Optional;
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Component
-@RequiredArgsConstructor
 public class CarValidator implements Validator {
 
-    private final CarsService carsService;
+    private final CarsServiceImpl carsService;
 
+    @Autowired
+    public CarValidator(CarsServiceImpl carsService) {
+        this.carsService = carsService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

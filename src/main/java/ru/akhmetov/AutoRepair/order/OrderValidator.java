@@ -1,16 +1,23 @@
 package ru.akhmetov.AutoRepair.order;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-/**  Валидация  **/
 
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Component
-@AllArgsConstructor
 public class OrderValidator implements Validator {
 
-    private final OrdersService ordersService;
+    private final OrdersServiceImpl ordersService;
+
+    @Autowired
+    public OrderValidator(OrdersServiceImpl ordersService) {
+        this.ordersService = ordersService;
+    }
+
 
     @Override
     public boolean supports(Class<?> clazz) {

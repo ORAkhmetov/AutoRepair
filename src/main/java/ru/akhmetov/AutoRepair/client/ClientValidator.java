@@ -1,18 +1,21 @@
 package ru.akhmetov.AutoRepair.client;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.util.Optional;
-/**  Валидация  **/
 
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Component
-@RequiredArgsConstructor
 public class ClientValidator implements Validator {
-    private final ClientsService clientsService;
+    private final ClientsServiceImpl clientsService;
 
+    public ClientValidator(ClientsServiceImpl clientsService) {
+        this.clientsService = clientsService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

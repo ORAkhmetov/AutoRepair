@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-/**  Репозиторий Spring Data JPA, предназначенный для работы с сущностью "Client"  **/
+
+/**
+ * @author Oleg Akhmetov on 26.12.2022
+ */
 @Repository
 public interface ClientsRepository extends JpaRepository<Client, Integer> {
     Optional<Client> getClientByFullName(String fullName);

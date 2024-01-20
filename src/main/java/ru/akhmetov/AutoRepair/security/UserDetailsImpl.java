@@ -1,17 +1,23 @@
 package ru.akhmetov.AutoRepair.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Collections;
-/**  Содержит информацию о пользователе, необходимую для процессов аутентификации и авторизации  **/
 
-@RequiredArgsConstructor
+/**
+ * @author Oleg Akhmetov on 28.12.2022
+ */
 public class UserDetailsImpl implements UserDetails {
 
     private final AUser aUser;
+
+    public UserDetailsImpl(AUser aUser) {
+        this.aUser = aUser;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
