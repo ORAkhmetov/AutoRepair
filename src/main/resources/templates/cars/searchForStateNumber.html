@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск по модели</title>
+</head>
+<body>
+<div th:insert="~{common :: com}"></div>
+<div class="container-fluid">
+    <!--  <div class="row row-cols-auto">-->
+    <form th:method="POST" th:action="@{/cars/searchForStateNumber}">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="searchQuery" class="form-label"></label>
+                        <input type="text" class="form-control" placeholder="Введите в поисковый запрос госномер. Цифровую часть или целиком." id="searchQuery" name="searchQuery">
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-lg">Найти</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--  </div>-->
+    <div th:if="${foundedCars}">
+        <div th:if="${foundedCars.isEmpty()}">
+            <p>Машин не найдено</p>
+        </div>
+        <div th:if="${!foundedCars.isEmpty()}">
+            <div class="row">
+                <div class="card-group">
+                    <div th:each="car : ${foundedCars}">
+
+                        <div class="card" style="width: 12rem;">
+                            <a th:href="@{/cars/{id}(id=${car.getId()})}">
+                                <img th:src="@{${car.getFilename()}}" class="card-img-top" alt="Not found" height="160">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${car.getModel()}">Card title</h5>
+                                <p class="card-text" th:text="${car.getStateNumber()}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="/clients?page=0">1</a></li> &lt;!&ndash;TODO&ndash;&gt;
+              <li class="page-item"><a class="page-link" href="/clients?page=1">2</a></li>
+              <li class="page-item"><a class="page-link" href="/clients?page=2">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>-->
+    </div>
+
+</body>
+</html>
