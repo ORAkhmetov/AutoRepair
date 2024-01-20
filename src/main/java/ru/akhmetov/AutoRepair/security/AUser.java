@@ -27,9 +27,6 @@ public class AUser {
     @Column(name = "role")
     private String role;
 
-    public AUser() {
-    }
-
     public AUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
