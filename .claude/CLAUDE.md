@@ -43,6 +43,13 @@ Docker-сборка: `Dockerfile` ожидает готовый `target/auto_rep
 
 `security/` содержит отдельный `config/SecurityConfig.java` (form login, роли `USER`/`ADMIN`, BCrypt) и сервисы регистрации/аутентификации (`AUserDetailsService`, `RegistrationService`, `AdminService`). Публичные без авторизации пути: `/auth/login`, `/auth/registration`, `/error`, `/proba/**`.
 
+## Git Workflow
+
+- Ветки создаются от `master` по шаблону `feature/DEV-x` или `bugfix/DEV-x`, где `x` — номер задачи. Если номер задачи неизвестен из контекста — уточнить его у оператора, не придумывать самостоятельно.
+- Сообщение коммита формируется по шаблону `DEV-x (feature|bugfix) Описание правок`, где `feature`/`bugfix` совпадает с типом ветки, а описание — краткая суть изменения на русском языке.
+
+  Пример: `DEV-142 (feature): Добавлена валидация email при регистрации клиента`
+
 ## Notes
 
 - `src/main/resources/application.yaml` и `docker-compose.yaml` содержат захардкоженные учётные данные локальной dev-БД PostgreSQL, закоммиченные в репозиторий. Это не production-секреты, но при доработке конфигурации стоит вынести их в переменные окружения, а не добавлять новые захардкоженные креды.
