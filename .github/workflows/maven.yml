@@ -9,10 +9,9 @@
 name: AutoRepaire cicd flow
 
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -30,6 +29,14 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
 
+  deploy:
+    needs: build
+    if: github.event_name == 'workflow_dispatch'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v6
       with:
