@@ -4,9 +4,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.MockMvcBuilderCustomizer;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.Errors;
 
@@ -14,6 +20,8 @@ import ru.akhmetov.AutoRepair.appeal.AppealsMapper;
 import ru.akhmetov.AutoRepair.appeal.AppealsService;
 import ru.akhmetov.AutoRepair.car.CarsMapper;
 import ru.akhmetov.AutoRepair.car.CarsService;
+import ru.akhmetov.AutoRepair.security.AUserDetailsService;
+import ru.akhmetov.AutoRepair.security.config.SecurityConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,30 +42,43 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(ClientsController.class)
+@EnableWebSecurity
+@Import({SecurityConfig.class, ClientsControllerTest.SecurityMockMvcConfig.class})
 class ClientsControllerTest {
+
+    @TestConfiguration
+    static class SecurityMockMvcConfig {
+        @Bean
+        MockMvcBuilderCustomizer securityMockMvcBuilderCustomizer() {
+            return builder -> builder.apply(SecurityMockMvcConfigurers.springSecurity());
+        }
+    }
 
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
+    AUserDetailsService aUserDetailsService;
+
+    @MockitoBean
     ClientsService clientsService;
 
-    @MockBean
+    @MockitoBean
     CarsService carsService;
 
-    @MockBean
+    @MockitoBean
     AppealsService appealsService;
 
-    @MockBean
+    @MockitoBean
     ClientValidator clientValidator;
 
-    @MockBean
+    @MockitoBean
     CarsMapper carsMapper;
 
-    @MockBean
+    @MockitoBean
     ClientsMapper clientsMapper;
 
-    @MockBean
+    @MockitoBean
     AppealsMapper appealsMapper;
 
     @Test
@@ -248,7 +269,8 @@ class ClientsControllerTest {
         var result = mockMvc.perform(get("/clients"));
 
         // then
-        result.andExpect(status().isUnauthorized());
+        result.andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/auth/login"));
 
         // and
         verify(clientsService, never()).findAll();
